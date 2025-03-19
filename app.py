@@ -31,7 +31,7 @@ EMAIL_PASSWORD = "jeiglcxeviwaducq"
 
 @app.route('/')
 def home():
-    return render_template("post-property.html")
+    return render_template("index.html")
 
 @app.route('/dashboard')
 def dashboard():
