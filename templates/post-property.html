@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Property Bharat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="post-property.css"> 
+    <style>
+        /* Custom Styling */
+        body {
+            background: #ffffff;
+        }
+
+        .input-field {
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            transform: scale(1.05);
+            border-color: #ff6b00;
+        }
+
+        .button-hover:hover {
+            transform: scale(1.05);
+        }
+
+        .form-section {
+            background: url('https://source.unsplash.com/1600x900/?real-estate,luxury') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-right: 5%;
+        }
+
+        .form-container {
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            background: #ffffff;
+        }
+
+        /* Button styling for selection */
+        .toggle-btn, .property-type-btn {
+            background-color: #ffffff;
+            color: #333333;
+            padding: 12px;
+            border: 1px solid #ff6b00;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Selected button style */
+        .selected {
+            background-color: #ff6b00;
+            border-color: #ff6b00;
+            color: white;
+        }
+
+        .toggle-btn:hover, .property-type-btn:hover {
+            background-color: #ff8533;
+            color: white;
+        }
+
+        .property-type-btn {
+            background-color: #ffffff;
+            color: #333333;
+            padding: 12px;
+            border: 1px solid #ff6b00;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step {
+            background: linear-gradient(to right, #ff6b00, #ff8533);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .step:hover {
+            transform: scale(1.05);
+        }
+
+        .step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-box {
+            position: fixed;
+            right: 10%;
+            margin-left: -30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .how-it-works {
+            width: 50%;
+            margin-left: 0;
+            margin-right: auto;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 8px 16px rgba(255, 107, 0, 0.1);
+        }
+
+        .grid-cols-1 {
+            justify-content: flex-start;
+            text-align: left;
+        }
+
+        /* Update form container styles */
+        .fixed-top-50-percent-right-12-percent{
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid #ff6b00 !important;
+        }
+
+        /* Update text colors */
+        .text-gray-200, .text-gray-300, .text-gray-400 {
+            color: #333333 !important;
+        }
+
+        .text-yellow-400 {
+            color: #ff6b00 !important;
+        }
+
+        /* Update input fields */
+        input, select {
+            background-color: #ffffff !important;
+            color: #333333 !important;
+            border: 1px solid #ff6b00 !important;
+        }
+
+        input::placeholder {
+            color: #666666 !important;
+        }
+
+        /* Update OTP input styling */
+        .otp-input {
+            background-color: #ffffff !important;
+            color: #333333 !important;
+            border: 1px solid #ff6b00 !important;
+        }
+
+        /* FAQ section updates */
+        .faq-section h2 {
+            color: #333333 !important;
+        }
+
+        .faq-section .bg-white {
+            border: 1px solid #ff6b00;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .how-it-works {
+                width: 90%;
+                margin: 0 auto;
+            }
+
+            .fixed-top-50-percent-right-12-percent {
+                width: 90%;
+                right: 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Form Section with Background -->
+    <section class="form-section w-full h-screen bg-cover bg-center bg-no-repeat" 
+        style="background-image: url('/static/images/background.png');">
+
+        <!-- Website Logo (Top Left Corner) -->
+        <div class="absolute top-4 left-6">
+            <a href="/" class="flex items-center space-x-2">
+                <img src="/static/images/logo.png" alt="Property Bharat Logo" 
+                    class="h-14 md:h-16 lg:h-18 w-auto transition-all duration-300">
+            </a>
+        </div>
+        <!-- Registration Card with Scrollable Content -->
+        <div class="fixed top-1/2 right-[12%] transform -translate-y-1/2 bg-white backdrop-blur-lg shadow-2xl rounded-xl p-10 max-w-md w-full z-50 transition-all border border-gray-700 
+        max-h-[80vh] overflow-y-auto scrollbar-thin scrollbar-thumb-green-500 scrollbar-track-green-300">
+                <!-- Logo & Heading -->
+                <div class="flex items-center justify-center space-x-3 mb-6">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2933/2933246.png" class="h-12 w-12 animate-bounce">
+                    <h2 class="text-3xl font-bold text-yellow-400">Register at Property Bharat</h2>
+                </div>
+                <p class="text-gray-300 text-center text-sm mb-4">Find or list your dream property easily.</p>
+
+                <!-- Registration Form -->
+                <form id="registerForm" class="space-y-5">
+
+                    <!-- Select Role -->
+                    <div>
+                        <label class="block text-gray-200 font-semibold">Register as</label>
+                        <select id="registerType" value="owner" class="w-full p-3 border border-gray-500 rounded-lg focus:ring-2 focus:ring-yellow-400 bg-gray-900 text-white">
+                            <option value="owner">Property Owner</option>
+                            <option value="broker">Broker/Agent</option>
+                            <option value="redev">Redevelopment</option>
+
+                        </select>
+                    </div>
+
+                    <!-- Property Type Selection -->
+                    <div>
+                        <label  class="block text-lg font-semibold">Property Type</label>
+                        <div class="grid grid-cols-2 gap-4 mt-2">
+                            <button type="button" id="residentialBtn" class="toggle-btn property-category">
+                                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" class="w-6 h-6"> Residential
+                            </button>
+                            <button type="button" id="commercialBtn" class="toggle-btn property-category">
+                                <img src="https://cdn-icons-png.flaticon.com/512/3144/3144456.png" class="w-6 h-6"> Commercial
+                            </button>
+                        </div>
+                    </div>
+                   
+                    <!-- Commercial Property Type Selection (Appears Only If Commercial is Selected) -->
+                    <div id="commercialPropertySection" class="mt-4 hidden">
+                        <label class="block text-lg font-semibold">Select Property Type</label>
+                        <div class="grid grid-cols-3 gap-4 mt-2">
+                            <button type="button" class="property-type-btn" data-type="Office">
+                                <img src="https://cdn-icons-png.flaticon.com/512/3065/3065702.png" class="w-8 h-8"> Office
+                            </button>
+                            <button type="button" class="property-type-btn" data-type="Retail Shop">
+                                <img src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png" class="w-8 h-8"> Retail Shop
+                            </button>
+                            <button type="button" class="property-type-btn" data-type="Showroom">
+                                <img src="https://cdn-icons-png.flaticon.com/512/1533/1533442.png" class="w-8 h-8"> Showroom
+                            </button>
+                            <button type="button" class="property-type-btn" data-type="Warehouse">
+                                <img src="https://cdn-icons-png.flaticon.com/512/2620/2620404.png" class="w-8 h-8"> Warehouse
+                            </button>
+                            <button type="button" class="property-type-btn" data-type="Plot">
+                                <img src="https://cdn-icons-png.flaticon.com/512/3144/3144456.png" class="w-8 h-8"> Plot
+                            </button>
+                            <button type="button" class="property-type-btn" data-type="Others">
+                                <img src="https://cdn-icons-png.flaticon.com/512/1521/1521710.png" class="w-8 h-8"> Others
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- JavaScript for Single Selection -->
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const propertyTypeButtons = document.querySelectorAll(".property-type-btn");
+                        
+                            propertyTypeButtons.forEach(button => {
+                                button.addEventListener("click", function () {
+                                    // Remove 'selected' class from all buttons
+                                    propertyTypeButtons.forEach(btn => btn.classList.remove("selected"));
+                        
+                                    // Add 'selected' class to the clicked button
+                                    this.classList.add("bg-yellow-400", "text-white");
+                        
+                                    // Log selected type (for future use)
+                                    console.log("Selected Property Type:", this.getAttribute("data-type"));
+                                });
+                            });
+                        });
+                    </script>
+                    
+                    <!-- Looking For Selection -->
+                    <div class="mt-4">
+                        <label class="block text-lg font-semibold mt-4">Looking For</label>
+                        <div class="grid grid-cols-2 gap-4 mt-2">
+                            <button type="button" id="rentBtn" class="toggle-btn selection-type">
+                                <img src="https://cdn-icons-png.flaticon.com/512/2420/2420055.png" class="w-5 h-5"> Rent
+                            </button>
+                            <button type="button" id="sellBtn" class="toggle-btn selection-type">
+                                <img src="https://cdn-icons-png.flaticon.com/512/2331/2331713.png" class="w-5 h-5"> Sell
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- JavaScript for Exclusive Selection and Future Functionality -->
+                    <script>
+                        // Function to handle exclusive selection between buttons in the same group
+                        function handleExclusiveSelection(buttons, selectedButton) {
+                            buttons.forEach(btn => btn.classList.remove("selected"));
+                            selectedButton.classList.add("selected");
+                        }
+
+                        // Property Category (Residential / Commercial)
+                        const propertyCategoryButtons = document.querySelectorAll(".property-category");
+                        propertyCategoryButtons.forEach(button => {
+                            button.addEventListener("click", function () {
+                                handleExclusiveSelection(propertyCategoryButtons, this);
+                                
+                                // Show Commercial Property Type section only when Commercial is selected
+                                if (this.id === "commercialBtn") {
+                                    document.getElementById("commercialPropertySection").classList.remove("hidden");
+                                } else {
+                                    document.getElementById("commercialPropertySection").classList.add("hidden");
+                                }
+                            });
+                        });
+                        document.addEventListener("DOMContentLoaded", function () {
+                        const registerType = document.getElementById("registerType");
+                        const propertyTypeSection = document.querySelector("#registerForm div:nth-child(2)"); // Selects the Property Type section
+
+                        registerType.addEventListener("change", function () {
+                            if (registerType.value === "broker") {
+                                propertyTypeSection.style.display = "none"; // Hide when Broker is selected
+                            } else {
+                                propertyTypeSection.style.display = "block"; // Show for other roles
+                            }
+                        });
+                    });
+
+
+                        // Rent/Sell Selection
+                        const selectionTypeButtons = document.querySelectorAll(".selection-type");
+                        selectionTypeButtons.forEach(button => {
+                            button.addEventListener("click", function () {
+                                handleExclusiveSelection(selectionTypeButtons, this);
+                            });
+                        });
+
+                        // Future Functionality Handling
+                        function checkSelectionCombination() {
+                            const selectedCategory = document.querySelector(".property-category.selected");
+                            const selectedType = document.querySelector(".selection-type.selected");
+                            
+                            if (selectedCategory && selectedType) {
+                                console.log(`Selected: ${selectedCategory.innerText} - ${selectedType.innerText}`);
+                                // Add more logic based on different selections
+                            }
+                        }
+
+                        document.querySelectorAll(".toggle-btn").forEach(button => {
+                            button.addEventListener("click", checkSelectionCombination);
+                        });
+                    </script>
+
+                    <!-- Email / Mobile Input -->
+                    <div>
+                        <label class="block text-gray-200 font-semibold">Mobile</label>
+                        <input type="text" id="contactInput" placeholder="Enter your Mobile " required
+                            class="input-field w-full p-3 border border-gray-500 rounded-lg focus:ring-2 focus:ring-yellow-400 bg-gray-900 text-white placeholder-gray-400">
+
+                    </div>
+                    <div>
+                        <label class="block text-gray-200 font-semibold">Email</label>
+                        <input type="email" id="registerInput" placeholder="Enter your Email Address" required
+                            class="input-field w-full p-3 border border-gray-500 rounded-lg focus:ring-2 focus:ring-yellow-400 bg-gray-900 text-white placeholder-gray-400">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-200 font-semibold">password</label>
+                        <input type="password" id="password" placeholder="password" required
+                            class="input-field w-full p-3 border border-gray-500 rounded-lg focus:ring-2 focus:ring-yellow-400 bg-gray-900 text-white placeholder-gray-400">
+                    </div>
+
+                    <!-- Send OTP Button -->
+                    <button type="button" id="sendOtp"
+                        class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-black font-medium py-3 rounded-lg button-hover transition-all mt-4">
+                        Send OTP
+                    </button>
+
+                    <!-- OTP Section (Hidden Initially) -->
+                    <div id="otpSection" class="hidden mt-4">
+                        <label class="block text-gray-200 font-semibold">Enter OTP</label>
+                        <div id="otpInputs" class="flex justify-between mt-2"></div>
+
+                        <!-- Resend OTP Button -->
+                        <button type="button" id="resendOtp"
+                            class="w-full bg-gradient-to-r from-gray-600 to-gray-800 text-white font-medium py-3 rounded-lg button-hover transition-all mt-4 hidden">
+                            Resend OTP
+                        </button>
+                    </div>
+
+                    <!-- Verify & Register Button (Initially Hidden) -->
+                    <button type="submit" id="verifyRegister"
+                        class="w-full bg-gradient-to-r from-green-500 to-teal-500 text-black font-medium py-3 rounded-lg button-hover transition-all mt-3 hidden">
+                        Verify & Register
+                    </button>
+
+                    <p class="text-sm text-gray-600 mt-4 text-center">Already have an account? 
+                        <a href="/login" class="text-yellow-600 font-medium hover:underline">Login</a>
+                    </p>
+                    
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                        console.log("JavaScript Loaded ✅");
+
+                        // Get DOM elements
+                        const sendOtpBtn = document.getElementById("sendOtp");
+                        const resendOtpBtn = document.getElementById("resendOtp");
+                        const verifyRegisterBtn = document.getElementById("verifyRegister");
+                        const otpSection = document.getElementById("otpSection");
+                        const otpInputsContainer = document.getElementById("otpInputs");
+                        const registerInput = document.getElementById("registerInput");
+                        const contactInput = document.getElementById("contactInput");
+                        const password = document.getElementById("password");
+                        const registerType = document.getElementById("registerType");
+                        const residentialBtn = document.getElementById("residentialBtn");
+                        const commercialBtn = document.getElementById("commercialBtn");
+
+                        if (!sendOtpBtn || !registerInput) {
+                            console.error("❌ Required elements missing in the DOM!");
+                            return;
+                        }
+
+                        // Store role selection in localStorage
+                        registerType.addEventListener("change", function () {
+                            localStorage.setItem("userRole", registerType.value);
+                            console.log(`✅ User Role Saved: ${registerType.value}`);
+                        });
+
+                        // Store property type selection in localStorage 
+                        residentialBtn.addEventListener("click", function () {
+                            localStorage.setItem("propertyType", "residential");
+                            console.log("🏠 Property Type Selected: Residential")
+                        });
+
+                        commercialBtn.addEventListener("click", function () {
+                            localStorage.setItem("propertyType", "commercial");
+                            console.log("🏢 Property Type Selected: Commercial");
+                        });
+                        function toggleSection() {
+                            let role = document.getElementById("role").value;
+                            let propertySection = document.getElementById("property-section");
+
+                            if (role === "broker") {
+                                propertySection.style.display = "none";
+                            } else {
+                                propertySection.style.display = "block";
+                            }
+                        }
+
+                        // Ensure the correct visibility on page load
+                        document.addEventListener("DOMContentLoaded", toggleSection);
+
+                        // Function to create OTP fields dynamically
+                        function createOtpFields() {
+                            otpInputsContainer.innerHTML = "";
+                            for (let i = 0; i < 4; i++) {
+                                const input = document.createElement("input");
+                                input.type = "text";
+                                input.maxLength = 1;
+                                input.className = "otp-input w-14 h-14 text-center text-lg border border-gray-500 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-yellow-400";
+                                otpInputsContainer.appendChild(input);
+                            }
+                        }
+
+                        // Function to send OTP request to Flask backend
+                        async function sendOtp() {
+                            const userInput = registerInput.value.trim();
+                            const contactUser = contactInput.value.trim();
+
+                            // Ensure both fields are filled
+                        if (!userInput || !contactUser) {
+                            alert("⚠️ Both Email and Mobile Number are required.");
+                            return;
+                        }
+
+                        // Validate Email format
+                        if (!validateEmail(userInput)) {
+                            alert("⚠️ Please enter a valid Email Address.");
+                            return;
+                        }
+
+                        // Validate Mobile Number format
+                        if (!validateMobile(contactUser)) {
+                            alert("⚠️ Please enter a valid 10-digit Mobile Number.");
+                            return;
+                        }
+
+
+                            console.log(`🔄 Sending OTP to: ${userInput}`);
+                            setButtonState(sendOtpBtn, "Sending...");
+
+                            try {
+                                const response = await fetch("http://127.0.0.1:5000/request-otp", {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({ email_or_mobile: userInput }),
+                                });
+
+                                const result = await response.json();
+                                console.log("📩 OTP Response:", result);
+
+                                if (response.ok) {
+                                    if (result.tp === true) {
+                                        alert("⚠️ Email already exists!");
+                                    } else {
+                                        alert("✅ OTP sent successfully! Check your email or mobile.");
+                                        otpSection.classList.remove("hidden");
+                                        resendOtpBtn.classList.remove("hidden");
+                                        verifyRegisterBtn.classList.remove("hidden");
+                                        createOtpFields();
+                                    }
+                                } else {
+                                    alert(result.error || "❌ Failed to send OTP.");
+                                }
+                            } catch (error) {
+                                console.error("❌ Error sending OTP:", error);
+                                alert("❌ OTP request failed. Please try again.");
+                            } finally {
+                                setButtonState(sendOtpBtn, "Send OTP");
+                            }
+                        }
+
+                        // Function to verify OTP
+                        async function verifyOtp() {
+                            let otpValue = "";
+                            document.querySelectorAll(".otp-input").forEach(input => otpValue += input.value.trim());
+                            const contactUser1 = contactInput.value.trim();
+                            if (otpValue.length !== 4) {
+                                alert("⚠️ Please enter the full 4-digit OTP.");
+                                return;
+                            }
+
+                            console.log(`🔄 Verifying OTP: ${otpValue}`);
+                            setButtonState(verifyRegisterBtn, "Verifying...");
+                            const propertyType1 = localStorage.getItem("propertyType");
+                            var userRole1 = document.getElementById("registerType").value;
+                            console.log(userRole1)
+                            
+                            try {
+                                const response = await fetch("http://127.0.0.1:5000/verify-otp", {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({ 
+                                        email_or_mobile: registerInput.value.trim(), 
+                                        cont : contactUser1,
+                                        otp: otpValue, 
+                                        password: password.value,
+                                        propertyt:propertyType1,
+                                        userr:userRole1
+                                    }),
+                                });
+
+                                const result = await response.json();
+                                console.log("🔍 OTP Verification Response:", result);
+
+                                if (response.ok) {
+                                    alert("✅ OTP verified! Redirecting...");
+
+                                    // Store user info in localStorage
+                                    localStorage.setItem("userEmail", registerInput.value.trim());
+                                    localStorage.setItem("loginTime", Date.now());
+
+                                    // Set session timeout (1 hour)
+                                    setTimeout(() => {
+                                        localStorage.removeItem("userEmail");
+                                        localStorage.removeItem("loginTime");
+                                        alert("Session expired. Please log in again.");
+                                        window.location.href = "/login";
+                                    }, 3600000);
+
+                                    // Redirect based on property type
+                                    const propertyType = localStorage.getItem("propertyType");
+                                      if (propertyType === "commercial" && userRole1==='owner') {
+                                        window.location.href = "dashboard-com";
+                                    } else if(userRole1==='redev'){
+                                        window.location.href = "dashboard-redev";
+                                    }else if(userRole1==='broker'){
+                                        window.location.href = "dashboard-broker";
+                                    }else {
+                                        window.location.href = "dashboard";
+                                    }
+                                } else {
+                                    alert(result.error || "❌ OTP verification failed.");
+                                }
+                            } catch (error) {
+                                console.error("❌ Error verifying OTP:", error);
+                                alert("❌ OTP verification failed. Please try again.");
+                            } finally {
+                                setButtonState(verifyRegisterBtn, "Verify & Register");
+                            }
+                        }
+
+
+                        function setButtonState(button, text) {
+                            button.innerText = text;
+                            button.disabled = text === "Sending..." || text === "Verifying...";
+                        }
+
+                        function validateEmail(email) {
+                            const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                            return re.test(email);
+                        }
+
+                        function validateMobile(mobile) {
+                            const re = /^[0-9]{10}$/;
+                            return re.test(mobile);
+                        }
+
+                        sendOtpBtn.addEventListener("click", sendOtp);
+                        resendOtpBtn.addEventListener("click", sendOtp);
+                        verifyRegisterBtn.addEventListener("click", verifyOtp);
+                    });
+
+                    </script>
+                </form>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works w-1/2 absolute left-0 top-full py-20 text-gray-800 pl-10">
+        <h2 class="text-4xl font-bold mb-6 text-center text-gray-800">How It Works</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="step bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828395.png" class="h-12 w-12 mb-3">
+                <h3 class="text-xl font-semibold">Step 1: Sign Up</h3>
+                <p class="text-gray-600 text-center">Create an account with your email or Google.</p>
+            </div>
+
+            <div class="step bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <img src="https://cdn-icons-png.flaticon.com/512/619/619153.png" class="h-12 w-12 mb-3">
+                <h3 class="text-xl font-semibold">Step 2: List or Find Properties</h3>
+                <p class="text-gray-600 text-center">Post your property for sale/rent or explore available listings.</p>
+            </div>
+
+            <div class="step bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <img src="https://cdn-icons-png.flaticon.com/512/726/726496.png" class="h-12 w-12 mb-3">
+                <h3 class="text-xl font-semibold">Step 3: Connect & Close Deals</h3>
+                <p class="text-gray-600 text-center">Chat with sellers or buyers and finalize the deal securely.</p>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("scroll", function() {
+                document.querySelectorAll(".step").forEach((step) => {
+                    let position = step.getBoundingClientRect().top;
+                    let windowHeight = window.innerHeight;
+                    if (position < windowHeight - 50) {
+                        step.classList.add("visible");
+                    }
+                });
+            });
+        </script>
+    </section>
+
+    <div class="absolute top-[-20px] left-0 w-full h-[calc(100vh-140px)] bg-cover bg-center z-[-1] rounded-b-[80px] overflow-hidden"
+        style="background-image: url('1.jpeg');">
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section w-1/2 absolute left-0 top-[calc(100%+500px)] py-20 text-gray-800 pl-10">
+        <h2 class="text-4xl font-bold mb-6 text-center text-gray-800">Frequently Asked Questions</h2>
+        
+        <div class="space-y-6">
+            <div class="bg-white p-6 rounded-lg shadow-lg transition-all hover:scale-105 flex flex-col items-start">
+                <h3 class="text-xl font-semibold flex items-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/545/545682.png" class="h-6 w-6 mr-3">
+                    How do I register on Property Bharat?
+                </h3>
+                <p class="text-gray-600 mt-2">Simply enter your email or mobile number, verify with OTP, and set a password.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg transition-all hover:scale-105 flex flex-col items-start">
+                <h3 class="text-xl font-semibold flex items-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/545/545682.png" class="h-6 w-6 mr-3">
+                    Can I list my property for free?
+                </h3>
+                <p class="text-gray-600 mt-2">Yes, you can list your property for free with basic details. Premium listings are available for better visibility.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg transition-all hover:scale-105 flex flex-col items-start">
+                <h3 class="text-xl font-semibold flex items-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/545/545682.png" class="h-6 w-6 mr-3">
+                    How do I contact property owners?
+                </h3>
+                <p class="text-gray-600 mt-2">Once you find a property, use the chat feature or contact the owner directly via the provided details.</p>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("scroll", function() {
+                document.querySelectorAll(".faq-section div").forEach((faq) => {
+                    let position = faq.getBoundingClientRect().top;
+                    let windowHeight = window.innerHeight;
+                    if (position < windowHeight - 50) {
+                        faq.classList.add("visible");
+                    }
+                });
+            });
+        </script>
+    </section>
+</body>
+</html>

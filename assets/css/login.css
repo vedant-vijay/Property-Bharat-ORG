@@ -1,0 +1,35 @@
+/* 🔹 General Styles */
+body {
+    background: linear-gradient(to right, #FF9933, #FFFFFF, #138808);
+}
+
+/* 🔹 Input Field Effects */
+input {
+    transition: all 0.3s ease-in-out;
+}
+
+input:focus {
+    transform: scale(1.05);
+    border-color: #FF751A;
+}
+
+/* 🔹 Button Hover */
+button:hover {
+    transform: scale(1.05);
+}
+
+/* 🔹 Form Container */
+form {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+    .login-card {
+        width: 90%;
+        padding: 1.5rem;
+    }
+}

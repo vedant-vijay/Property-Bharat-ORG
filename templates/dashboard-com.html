@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+    body {
+        background: #f0f2f5;
+        color: #333;
+        font-family: Arial, sans-serif;
+    }
+    
+    .form-container {
+        max-height: 500px;
+        overflow-y: auto !important;
+        padding-right: 10px;
+        scrollbar-width: thin;
+        scrollbar-color: #4CAF50 #e5e7eb;
+    }
+    
+    .form-container::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .form-container::-webkit-scrollbar-track {
+        background: #e5e7eb;
+    }
+    
+    .form-container::-webkit-scrollbar-thumb {
+        background: #4CAF50;
+        border-radius: 5px;
+    }
+    
+    .form-container::-webkit-scrollbar-thumb:hover {
+        background: #388E3C;
+    }
+    
+    .step {
+        background: linear-gradient(to right, #ff6b00, #ff8533);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(255, 107, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .step.active {
+        transform: scale(1.05);
+        background: linear-gradient(to right, #2E7D32, #1B5E20);
+    }
+    
+    .input-field {
+        transition: all 0.3s ease;
+        background: white;
+        color: #333;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        width: 100%;
+        font-size: 1rem;
+    }
+    
+    .input-field:focus {
+        transform: scale(1.02);
+        border-color: #ff6b00;
+        box-shadow: 0 2px 8px rgba(255, 107, 0, 0.2);
+    }
+    
+    .select-btn {
+        background-color: white;
+        color: #333;
+        padding: 10px 15px;
+        border: 1px solid #ff6b00;
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        width: auto;
+        margin: auto;
+        min-width: 120px;
+        font-weight: 600;
+    }
+    
+    .select-btn:hover {
+        background-color: #fff3e6;
+        transform: scale(1.05);
+        border-color: #ff8533;
+    }
+    
+    .select-btn.selected {
+        background-color: #4CAF50;
+        border-color: #4CAF50;
+        color: white;
+        box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+    }
+    
+    .section-header {
+        color: #ff6b00;
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+    
+    .form-section {
+        border-left: 4px solid #ff6b00;
+        background: #fff;
+    }
+    
+    .progress-step {
+        position: relative;
+        padding-left: 2rem;
+        margin-bottom: 1rem;
+    }
+    
+    .progress-step::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #e0e0e0;
+        border: 2px solid #fff;
+    }
+    
+    .progress-step.completed::before {
+        background: #4CAF50;
+    }
+    
+    .progress-step.active::before {
+        background: #ff6b00;
+    }
+    
+    .progress-line {
+        position: absolute;
+        left: 9px;
+        top: 20px;
+        bottom: -20px;
+        width: 2px;
+        background: #e0e0e0;
+    }
+    
+    .progress-step.completed .progress-line {
+        background: #4CAF50;
+    }
+    
+    .main-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+    
+    .content-wrapper {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .progress-section {
+        width: 250px;
+        flex-shrink: 0;
+    }
+    
+    .form-section-wrapper {
+        width: 600px;
+        flex-shrink: 0;
+    }
+    
+    @media (max-width: 768px) {
+        .progress-tracker {
+            margin-bottom: 2rem;
+        }
+        
+        .content-wrapper {
+            flex-direction: column;
+        }
+        
+        .progress-section,
+        .form-section-wrapper {
+            width: 100%;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="content-wrapper">
+            <!-- Progress Tracker -->
+            <div class="progress-section">
+                <div class="progress-tracker bg-white p-4 rounded-xl shadow-lg h-fit">
+                    <h2 class="text-lg font-bold mb-4 text-gray-800">Progress</h2>
+                    <div class="progress-steps">
+                        <div id="basicDetailsProgress" class="progress-step active">
+                            <div class="progress-line"></div>
+                            <h3 class="progress-title">Basic Details</h3>
+                            <p class="progress-desc">Name & Location</p>
+                        </div>
+                        <div id="propertyTypeProgress" class="progress-step">
+                            <div class="progress-line"></div>
+                            <h3 class="progress-title">Property Type</h3>
+                            <p class="progress-desc">Type & Location Hub</p>
+                        </div>
+                        <div id="areaDetailsProgress" class="progress-step">
+                            <div class="progress-line"></div>
+                            <h3 class="progress-title">Area Details</h3>
+                            <p class="progress-desc">Area & Facilities</p>
+                        </div>
+                        <div id="ownershipProgress" class="progress-step">
+                            <div class="progress-line"></div>
+                            <h3 class="progress-title">Ownership</h3>
+                            <p class="progress-desc">Ownership & Floor</p>
+                        </div>
+                        <div id="mediaProgress" class="progress-step">
+                            <h3 class="progress-title">Media</h3>
+                            <p class="progress-desc">Photos & Notes</p>
+                        </div>
+                    </div>
+                    <!-- Progress Percentage -->
+                    <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-sm font-semibold">Complete</span>
+                            <span id="progressPercentage" class="text-green-600 font-bold text-sm">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-1.5">
+                            <div id="progressBar" class="bg-green-600 h-1.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Form Container -->
+            <div class="form-section-wrapper">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <!-- Progress Steps -->
+                    <div class="mb-8 flex justify-between">
+                        <div id="step1Indicator" class="step active w-[48%] text-center">
+                            Step 1: Basic Details
+                        </div>
+                        <div id="step2Indicator" class="step w-[48%] text-center">
+                            Step 2: Additional Details
+                        </div>
+                    </div>
+
+                    <!-- Step 1 Form -->
+                    <div id="step1Form" class="form-container">
+                        <div class="space-y-6">
+                            <!-- Basic Details -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Basic Details</h3>
+                                <div class="space-y-4">
+                                    <input type="text" id="name" class="input-field" placeholder="Name" required>
+                                    <input type="text" id="location" class="input-field" placeholder="Location" required>
+                                </div>
+                            </div>
+
+                            <!-- Possession Info -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Possession Info</h3>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <button type="button" class="select-btn" onclick="selectOption('possession', 'Ready to Move')">Ready to Move</button>
+                                    <button type="button" class="select-btn" onclick="selectOption('possession', 'Under Construction')">Under Construction</button>
+                                </div>
+                                <input type="hidden" id="possession" required>
+                            </div>
+
+                            <!-- Property Type -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Property Type</h3>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <button type="button" class="select-btn" onclick="selectOption('propertyType', 'Industrial')">Industrial</button>
+                                    <button type="button" class="select-btn" onclick="selectOption('propertyType', 'Commercial')">Commercial</button>
+                                    <button type="button" class="select-btn" onclick="selectOption('propertyType', 'Open Space')">Open Space</button>
+                                    <button type="button" class="select-btn" onclick="selectOption('propertyType', 'SEZ')">SEZ</button>
+                                </div>
+                                <input type="hidden" id="propertyType" required>
+                            </div>
+
+                            <div class="mt-6">
+                                <button onclick="nextStep()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                                    Next Step
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 Form -->
+                    <div id="step2Form" class="form-container hidden">
+                        <div class="space-y-6">
+                            <!-- Location Hub -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Location Hub</h3>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <button type="button" class="select-btn" onclick="selectOption('locationHub', 'IT Park')">IT Park</button>
+                                    <button type="button" class="select-btn" onclick="selectOption('locationHub', 'Business Park')">Business Park</button>
+                                </div>
+                                <input type="hidden" id="locationHub" required>
+                            </div>
+
+                            <!-- Property Condition -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Property Condition</h3>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <button type="button" class="select-btn" onclick="selectOption('condition', 'Ready to Use')">Ready to Use</button>
+                                    <button type="button" class="select-btn" onclick="selectOption('condition', 'Bare Shell')">Bare Shell</button>
+                                </div>
+                                <input type="hidden" id="condition" required>
+                            </div>
+
+                            <!-- Area Details -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Area Details</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Build up Area (sq ft)</label>
+                                        <input type="number" id="buildupArea" class="input-field" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Carpet Area (sq ft)</label>
+                                        <input type="number" id="carpetArea" class="input-field" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ownership -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Ownership</h3>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <button type="button" class="select-btn" onclick="selectOption('ownership', 'Free Hold')">Free Hold</button>
+                                    <button type="button" class="select-btn" onclick="selectOption('ownership', 'Lease Hold')">Lease Hold</button>
+                                    <button type="button" class="select-btn" onclick="selectOption('ownership', 'Cooperative Society')">Cooperative Society</button>
+                                </div>
+                                <input type="hidden" id="ownership" required>
+                            </div>
+
+                            <!-- Floor Details -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Floor Details</h3>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Total Floors</label>
+                                        <input type="number" id="totalFloors" class="input-field" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Your Floor</label>
+                                        <input type="number" id="yourFloor" class="input-field" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Facilities -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Facilities</h3>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Number of Seats</label>
+                                        <input type="number" id="seats" class="input-field" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Number of Cabins</label>
+                                        <input type="number" id="cabins" class="input-field" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Number of Rooms</label>
+                                        <input type="number" id="rooms" class="input-field" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Price Details -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Price Details</h3>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Price</label>
+                                    <input type="number" id="price" class="input-field" required>
+                                </div>
+                            </div>
+
+                            <!-- Property Photos -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Property Photos</h3>
+                                <input type="file" id="photos" multiple accept="image/*" class="input-field" required>
+                                <p class="text-sm text-gray-500 mt-2">You can upload multiple photos</p>
+                            </div>
+
+                            <!-- Additional Comments -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Additional Comments</h3>
+                                <textarea id="comments" rows="4" class="input-field"></textarea>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <button type="button" onclick="previousStep()" class="w-1/2 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Previous</button>
+                                <button type="submit" onclick="submitForm()" class="w-1/2 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function selectOption(fieldId, value) {
+        const buttons = document.querySelectorAll(`button[onclick*="${fieldId}"]`);
+        buttons.forEach(btn => {
+            btn.classList.remove('selected');
+            if (btn.textContent === value) {
+                btn.classList.add('selected');
+            }
+        });
+        document.getElementById(fieldId).value = value;
+        updateProgress();
+    }
+
+    function nextStep() {
+        const requiredFields = ['name', 'location', 'possession', 'propertyType'];
+        const isValid = requiredFields.every(field => {
+            const element = document.getElementById(field);
+            return element && element.value;
+        });
+
+        if (!isValid) {
+            alert('Please fill in all required fields before proceeding.');
+            return;
+        }
+
+        document.getElementById('step1Form').classList.add('hidden');
+        document.getElementById('step2Form').classList.remove('hidden');
+        document.getElementById('step1Indicator').classList.remove('active');
+        document.getElementById('step2Indicator').classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    function previousStep() {
+        document.getElementById('step2Form').classList.add('hidden');
+        document.getElementById('step1Form').classList.remove('hidden');
+        document.getElementById('step2Indicator').classList.remove('active');
+        document.getElementById('step1Indicator').classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    function updateProgress() {
+        const totalFields = 15;
+        let filledFields = 0;
+        
+        ['name', 'location', 'possession', 'propertyType', 'locationHub', 
+        'condition', 'buildupArea', 'carpetArea', 'ownership', 'totalFloors',
+        'yourFloor', 'seats', 'cabins', 'rooms', 'price']
+        .forEach(field => {
+            if (document.getElementById(field)?.value) filledFields++;
+        });
+        
+        const progress = Math.round((filledFields / totalFields) * 100);
+        
+        document.getElementById('progressBar').style.width = `${progress}%`;
+        document.getElementById('progressPercentage').textContent = `${progress}%`;
+        
+        updateProgressSteps();
+    }
+
+    function updateProgressSteps() {
+        const steps = {
+            'basicDetailsProgress': ['name', 'location'],
+            'propertyTypeProgress': ['possession', 'propertyType', 'locationHub', 'condition'],
+            'areaDetailsProgress': ['buildupArea', 'carpetArea', 'seats', 'cabins', 'rooms'],
+            'ownershipProgress': ['ownership', 'totalFloors', 'yourFloor', 'price'],
+            'mediaProgress': ['photos']
+        };
+        
+        for (let [stepId, fields] of Object.entries(steps)) {
+            const step = document.getElementById(stepId);
+            const isComplete = fields.every(field => document.getElementById(field)?.value);
+            
+            step.classList.remove('completed', 'active');
+            if (isComplete) {
+                step.classList.add('completed');
+            } else if (fields.some(field => document.getElementById(field)?.value)) {
+                step.classList.add('active');
+            }
+        }
+    }
+
+    async function submitForm() {
+        const formData = new FormData();
+        var email44 = localStorage.getItem("userEmail");
+        formData.append('email', email44);
+        
+        // Basic Details
+        formData.append('name', document.getElementById('name').value);
+        formData.append('location', document.getElementById('location').value);
+        formData.append('possession', document.getElementById('possession').value);
+        formData.append('propertyType', document.getElementById('propertyType').value);
+        
+        // Additional Details
+        formData.append('locationHub', document.getElementById('locationHub').value);
+        formData.append('condition', document.getElementById('condition').value);
+        formData.append('buildupArea', document.getElementById('buildupArea').value);
+        formData.append('carpetArea', document.getElementById('carpetArea').value);
+        formData.append('ownership', document.getElementById('ownership').value);
+        formData.append('totalFloors', document.getElementById('totalFloors').value);
+        formData.append('yourFloor', document.getElementById('yourFloor').value);
+        formData.append('seats', document.getElementById('seats').value);
+        formData.append('cabins', document.getElementById('cabins').value);
+        formData.append('rooms', document.getElementById('rooms').value);
+        formData.append('price', document.getElementById('price').value);
+        formData.append('comments', document.getElementById('comments').value);
+        
+        // Handle Photos
+        const photos = document.getElementById('photos').files;
+        for (let i = 0; i < photos.length; i++) {
+            formData.append('photos', photos[i]);
+        }
+        try {
+                const response = await fetch('http://127.0.0.1:5000/save-property3', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert('✅ Property details saved successfully!');
+                    window.location.href = '/';
+                } else {
+                    alert('❌ Error: ' + result.error);
+                }
+            } catch (error) {
+                alert('❌ Network error: ' + error.message);
+            }
+            
+        
+        console.log('Form submitted:', Object.fromEntries(formData));
+        alert('Form submitted successfully!');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const inputFields = document.querySelectorAll('input, textarea');
+        inputFields.forEach(field => {
+            field.addEventListener('input', updateProgress);
+        });
+        
+        updateProgress();
+    });
+    </script>
+</body>
+</html>

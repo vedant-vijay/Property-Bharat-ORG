@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Bharat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <style>
+        /* Navbar background transition */
+        .navbar {
+            transition: background 0.3s ease-in-out;
+        }
+        .scrolled {
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <header class="navbar fixed w-full z-50 p-4 bg-gradient-to-r from-indigo-800 to-purple-700 text-white shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="text-2xl font-bold flex items-center space-x-2" data-aos="fade-down">
+                <img src="/static/images/logo.png" alt="Property Bharat Logo" class="h-14 md:h-16 lg:h-18 w-auto">
+            </a>
+
+            
+            <!-- Navigation Links (Desktop) -->
+            <nav id="navLinks" class="hidden md:flex space-x-6">
+                <a href="#" class="hover:text-yellow-400 transition duration-300" data-aos="fade-down">Home</a>
+                <a href="#" class="hover:text-yellow-400 transition duration-300" data-aos="fade-down" data-aos-delay="100">Buy</a>
+                <a href="#" class="hover:text-yellow-400 transition duration-300" data-aos="fade-down" data-aos-delay="200">Rent</a>
+                <a href="#" class="hover:text-yellow-400 transition duration-300" data-aos="fade-down" data-aos-delay="300">Sell</a>
+                <a href="#" class="hover:text-yellow-400 transition duration-300" data-aos="fade-down" data-aos-delay="400">News</a>
+            </nav>
+            
+            <!-- Post Property & Hamburger Menu -->
+            <div class="flex items-center space-x-4">
+                <button id="postPropertyBtn" class="bg-yellow-500 px-4 py-2 rounded-full text-sm font-semibold hover:bg-yellow-600 transition duration-300 transform hover:scale-105" data-aos="fade-left">
+                    Post Property <span class="text-xs bg-white text-yellow-600 px-2 ml-1 rounded">FREE</span>
+                </button>
+                <script>
+                    document.getElementById("postPropertyBtn").addEventListener("click", function() {
+                        window.location.href = "/post-property";
+                    });
+                </script>
+                <button class="md:hidden text-2xl focus:outline-none" onclick="toggleMenu()">☰</button>
+            </div>
+        </div>
+    
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden flex flex-col items-center bg-indigo-900 text-white py-4 space-y-4 absolute top-16 w-full md:hidden transition duration-500">
+            <a href="#" class="hover:text-yellow-400 transition">Home</a>
+            <a href="#" class="hover:text-yellow-400 transition">Buy</a>
+            <a href="#" class="hover:text-yellow-400 transition">Rent</a>
+            <a href="#" class="hover:text-yellow-400 transition">Sell</a>
+            <a href="#" class="hover:text-yellow-400 transition">News</a>
+        </div>
+    </header>
+    
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-indigo-900 to-purple-700 text-white pt-24 pb-16">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold mb-2" data-aos="zoom-in">Properties to buy in Your City</h1>
+            <p class="text-lg opacity-80" data-aos="fade-up" data-aos-delay="200">5K+ listings added daily and 1L+ total verified</p>
+
+            <!-- Search Box -->
+            <div class="mt-6 mx-auto bg-white p-4 rounded-lg shadow-lg max-w-2xl" data-aos="fade-up" data-aos-delay="300">
+                <div class="flex space-x-4">
+                    <select class="px-4 py-2 border rounded-lg text-gray-700 w-1/3 hover:shadow-md transition">
+                        <option>Pune</option>
+                        <option>Delhi</option>
+                        <option>Mumbai</option>
+                    </select>
+                    <input type="text" placeholder="Search for locality, landmark, or project" class="flex-1 px-4 py-2 border rounded-lg text-gray-700 hover:shadow-md transition">
+                    <button class="bg-green-500 px-6 py-2 rounded-lg text-white font-semibold hover:bg-green-600 transition transform hover:scale-105">Search</button>
+                </div>
+            </div>
+
+            <!-- Property Type Tabs -->
+            <div class="mt-6 flex justify-center space-x-6" data-aos="fade-up" data-aos-delay="400">
+                <a href="#" class="text-lg font-semibold border-b-2 border-transparent hover:border-white transition">BUY</a>
+                <a href="#" class="text-lg font-semibold border-b-2 border-transparent hover:border-white transition">RENT</a>
+                <a href="#" class="text-lg font-semibold border-b-2 border-transparent hover:border-white transition">COMMERCIAL</a>
+                <a href="#" class="text-lg font-semibold border-b-2 border-transparent hover:border-white transition">PG/CO-LIVING</a>
+                <a href="#" class="text-lg font-semibold border-b-2 border-transparent hover:border-white transition">PLOTS</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Menu (Hidden by Default) -->
+    <div id="mobileMenu" class="fixed inset-0 bg-black bg-opacity-80 hidden flex flex-col justify-center items-center space-y-6 text-white text-lg">
+        <a href="#" class="hover:text-yellow-400">Home</a>
+        <a href="#" class="hover:text-yellow-400">Buy</a>
+        <a href="#" class="hover:text-yellow-400">Rent</a>
+        <a href="#" class="hover:text-yellow-400">Sell</a>
+        <a href="#" class="hover:text-yellow-400">News</a>
+        <button onclick="toggleMenu()" class="text-3xl absolute top-5 right-5">✖</button>
+    </div>
+
+    <!-- Script for Scroll Effects & Mobile Menu -->
+    <script>
+        function toggleMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener("scroll", function () {
+            let navbar = document.querySelector(".navbar");
+            if (window.scrollY > 50) {
+                navbar.classList.add("scrolled");
+            } else {
+                navbar.classList.remove("scrolled");
+            }
+        });
+    </script>
+
+    <!-- AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800, // Animation duration
+            offset: 100, // Offset before animation starts
+        });
+    </script>
+
+
+    <!-- Page Title -->
+    <div class="bg-gradient-to-r from-indigo-900 to-purple-700 text-white text-center py-8">
+        <h1 class="text-3xl font-bold" data-aos="fade-down">Find Your Dream Property</h1>
+        <p class="text-lg opacity-80 mt-2" data-aos="fade-up">Browse through the best real estate deals</p>
+    </div>
+
+    <!-- Filters & Sorting -->
+    <div class="container mx-auto py-6 px-6 bg-white shadow-md rounded-lg">
+        <div class="flex flex-wrap gap-4 items-center">
+            <select id="propertyType" class="border p-2 rounded-lg">
+                <option value="all">🏡 All Types</option>
+                <option value="apartment">🏢 Apartment</option>
+                <option value="villa">🏠 Villa</option>
+                <option value="plot">🌳 Plot</option>
+            </select>
+
+            <input type="number" id="minPrice" placeholder="Min Price (₹)" class="border p-2 rounded-lg">
+            <input type="number" id="maxPrice" placeholder="Max Price (₹)" class="border p-2 rounded-lg">
+
+            <select id="sortBy" class="border p-2 rounded-lg">
+                <option value="latest">🆕 Latest Listings</option>
+                <option value="lowToHigh">⬇ Price: Low to High</option>
+                <option value="highToLow">⬆ Price: High to Low</option>
+            </select>
+
+            <button onclick="applyFilters()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">🔍 Apply Filters</button>
+        </div>
+    </div>
+
+    <!-- Property Listing Grid -->
+    <div class="container mx-auto py-12 px-6">
+        <div id="propertyGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Property Cards -->
+            <div class="property-card bg-white rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105" data-aos="fade-up" data-type="apartment" data-price="7500000">
+                <div class="relative">
+                    <img src="\static\images\building1.jpg" alt="Property Image" class="w-full h-48 object-cover">
+                    <span class="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-lg">🔥 Featured</span>
+                </div>
+                <div class="p-4">
+                    <h2 class="text-xl font-bold text-gray-800">Luxury 2BHK Apartment</h2>
+                    <p class="text-gray-500 text-sm flex items-center"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>Pune, Maharashtra</p>
+                    <p class="text-green-600 text-lg font-bold mt-2 flex items-center"><i class="fas fa-rupee-sign mr-2"></i>75 Lakh</p>
+                    <a href="/register" class="mt-4 inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 w-full text-center">
+                        Enquire Now
+                    </a>
+                </div>
+            </div>
+
+            <div class="property-card bg-white rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105" data-aos="fade-up" data-type="villa" data-price="12000000">
+                <div class="relative">
+                    <img src="\static\images\building2.jpg" alt="Property Image" class="w-full h-48 object-cover">
+                    <span class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-lg">🌟 New</span>
+                </div>
+                <div class="p-4">
+                    <h2 class="text-xl font-bold text-gray-800">Modern 3BHK Villa</h2>
+                    <p class="text-gray-500 text-sm flex items-center"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>Bangalore, Karnataka</p>
+                    <p class="text-green-600 text-lg font-bold mt-2 flex items-center"><i class="fas fa-rupee-sign mr-2"></i>1.2 Crore</p>
+                    <!-- Enquire Now Button (Redirects to /register) -->
+                    <a href="/register" class="mt-4 inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 w-full text-center">
+                        Enquire Now
+                    </a>
+                </div>
+            </div>
+
+            <div class="property-card bg-white rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105" data-aos="fade-up" data-type="apartment" data-price="25000000">
+                <div class="relative">
+                    <img src="\static\images\building3.jpg" alt="Property Image" class="w-full h-48 object-cover">
+                    <span class="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-lg">💎 Premium</span>
+                </div>
+                <div class="p-4">
+                    <h2 class="text-xl font-bold text-gray-800">Spacious 4BHK Apartment</h2>
+                    <p class="text-gray-500 text-sm flex items-center"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>Mumbai, Maharashtra</p>
+                    <p class="text-green-600 text-lg font-bold mt-2 flex items-center"><i class="fas fa-rupee-sign mr-2"></i>2.5 Crore</p>
+                    <a href="/register" class="mt-4 inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 w-full text-center">
+                        Enquire Now
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript for Filtering & Sorting -->
+    <script>
+        function applyFilters() {
+            const propertyType = document.getElementById('propertyType').value;
+            const minPrice = document.getElementById('minPrice').value;
+            const maxPrice = document.getElementById('maxPrice').value;
+            const sortBy = document.getElementById('sortBy').value;
+
+            let properties = document.querySelectorAll('.property-card');
+            properties = Array.from(properties);
+
+            properties.forEach(property => {
+                let price = parseInt(property.getAttribute('data-price'));
+                let type = property.getAttribute('data-type');
+
+                if (propertyType !== 'all' && type !== propertyType) {
+                    property.style.display = 'none';
+                    return;
+                }
+
+                if ((minPrice && price < minPrice) || (maxPrice && price > maxPrice)) {
+                    property.style.display = 'none';
+                    return;
+                }
+
+                property.style.display = 'block';
+            });
+
+            if (sortBy === 'lowToHigh') {
+                properties.sort((a, b) => parseInt(a.getAttribute('data-price')) - parseInt(b.getAttribute('data-price')));
+            } else if (sortBy === 'highToLow') {
+                properties.sort((a, b) => parseInt(b.getAttribute('data-price')) - parseInt(a.getAttribute('data-price')));
+            }
+
+            const grid = document.getElementById('propertyGrid');
+            grid.innerHTML = '';
+            properties.forEach(property => grid.appendChild(property));
+        }
+    </script>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            offset: 100,
+        });
+    </script>
+    <footer class="bg-gray-900 text-white py-10 mt-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                
+                <!-- Company Info -->
+                <div data-aos="fade-up">
+                    <h3 class="text-lg font-bold">🏠 Property Bharat</h3>
+                    <p class="text-gray-400 mt-2">Your trusted real estate partner.</p>
+                    <p class="text-gray-400 mt-2">© 2025 Property Bharat. All rights reserved.</p>
+                </div>
+    
+                <!-- Quick Links -->
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-lg font-bold">🔗 Quick Links</h3>
+                    <ul class="mt-2 space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Buy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Rent</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Commercial</a></li>
+                    </ul>
+                </div>
+    
+                <!-- Contact Info -->
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-lg font-bold">📞 Contact Us</h3>
+                    <p class="text-gray-400 mt-2">Email: support@propertybharat.com</p>
+                    <p class="text-gray-400 mt-2">Phone: +91 98765 43210</p>
+                </div>
+    
+                <!-- Newsletter Subscription -->
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-lg font-bold">📬 Subscribe to Newsletter</h3>
+                    <p class="text-gray-400 mt-2">Stay updated with the latest properties.</p>
+                    <div class="mt-4">
+                        <input type="email" placeholder="Enter your email" class="w-full p-2 text-gray-800 rounded">
+                        <button class="w-full mt-2 bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Social Media Links -->
+            <div class="mt-8 flex justify-center space-x-6" data-aos="fade-up">
+                <a href="#" class="text-gray-400 hover:text-white transition text-2xl"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-2xl"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-2xl"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition text-2xl"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            offset: 100,
+        });
+    </script>
+    
+
+
+</body>
+</html>

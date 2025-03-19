@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: #f0f2f5;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            max-height: 500px;
+            overflow-y: auto !important;
+            padding-right: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: #4CAF50 #e5e7eb;
+        }
+
+        .form-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .form-container::-webkit-scrollbar-track {
+            background: #e5e7eb;
+        }
+
+        .form-container::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 5px;
+        }
+
+        .form-container::-webkit-scrollbar-thumb:hover {
+            background: #388E3C;
+        }
+
+        .step {
+            background: linear-gradient(to right, #ff6b00, #ff8533);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(255, 107, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            transform: scale(1.05);
+            background: linear-gradient(to right, #2E7D32, #1B5E20);
+        }
+
+        .input-field {
+            transition: all 0.3s ease;
+            background: white;
+            color: #333;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .input-field:focus {
+            transform: scale(1.02);
+            border-color: #ff6b00;
+            box-shadow: 0 2px 8px rgba(255, 107, 0, 0.2);
+        }
+
+        .select-btn {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            border: 1px solid #ff6b00;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            width: auto;
+            margin: auto;
+            min-width: 120px;
+            font-weight: 600;
+        }
+
+        .select-btn:hover {
+            background-color: #fff3e6;
+            transform: scale(1.05);
+            border-color: #ff8533;
+        }
+
+        .select-btn.selected {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+            color: white;
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+        }
+
+        .section-header {
+            color: #ff6b00;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .form-section {
+            border-left: 4px solid #ff6b00;
+            background: #fff;
+        }
+
+        .progress-step {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .progress-step::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            border: 2px solid #fff;
+        }
+
+        .progress-step.completed::before {
+            background: #4CAF50;
+        }
+
+        .progress-step.active::before {
+            background: #ff6b00;
+        }
+
+        .progress-line {
+            position: absolute;
+            left: 9px;
+            top: 20px;
+            bottom: -20px;
+            width: 2px;
+            background: #e0e0e0;
+        }
+
+        .progress-step.completed .progress-line {
+            background: #4CAF50;
+        }
+
+        @media (max-width: 768px) {
+            .progress-tracker {
+                margin-bottom: 2rem;
+            }
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #444;
+        }
+
+        .progress-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0;
+            color: #333;
+        }
+
+        .progress-desc {
+            font-size: 0.75rem;
+            color: #666;
+            margin: 0;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .progress-section {
+            width: 250px;
+            flex-shrink: 0;
+        }
+
+        .form-section-wrapper {
+            width: 600px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="content-wrapper">
+            <!-- Progress Tracker -->
+            <div class="progress-section">
+                <div class="progress-tracker bg-white p-4 rounded-xl shadow-lg h-fit">
+                    <h2 class="text-lg font-bold mb-4 text-gray-800">Progress</h2>
+                    <div class="progress-steps">
+                        <div id="basicDetailsProgress" class="progress-step active">
+                            <div class="progress-line"></div>
+                            <h3 class="progress-title">Basic Info</h3>
+                            <p class="progress-desc">Name & Location</p>
+                        </div>
+                        <div id="possessionProgress" class="progress-step">
+                            <div class="progress-line"></div>
+                            <h3 class="progress-title">Possession</h3>
+                            <p class="progress-desc">Status & Date</p>
+                        </div>
+                        <div id="propertyTypeProgress" class="progress-step">
+                            <div class="progress-line"></div>
+                            <h3 class="progress-title">Type</h3>
+                            <p class="progress-desc">Property Category</p>
+                        </div>
+                        <div id="priceProgress" class="progress-step">
+                            <div class="progress-line"></div>
+                            <h3 class="progress-title">Price</h3>
+                            <p class="progress-desc">Cost & Deposit</p>
+                        </div>
+                        <div id="mediaProgress" class="progress-step">
+                            <h3 class="progress-title">Media</h3>
+                            <p class="progress-desc">Photos & Notes</p>
+                        </div>
+                    </div>
+                    <!-- Progress Percentage -->
+                    <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-sm font-semibold">Complete</span>
+                            <span id="progressPercentage" class="text-green-600 font-bold text-sm">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-1.5">
+                            <div id="progressBar" class="bg-green-600 h-1.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Form Container -->
+            <div class="form-section-wrapper">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <!-- Progress Steps -->
+                    <div class="mb-8 flex justify-between">
+                        <div id="step1Indicator" class="step active w-[48%] text-center">
+                            Step 1: Basic Details
+                        </div>
+                        <div id="step2Indicator" class="step w-[48%] text-center">
+                            Step 2: Additional Details
+                        </div>
+                    </div>
+
+                    <!-- Step 1 Form -->
+                    <div id="step1Form" class="form-container">
+                        <div class="space-y-6">
+                            <!-- Property Details -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Property Details</h3>
+                                <div class="space-y-4">
+                                    <input type="text" id="username" class="input-field" placeholder="Your Name" required>
+                                    <input type="text" id="city" class="input-field" placeholder="City" required>
+                                    <input type="text" id="locality" class="input-field" placeholder="Locality" required>
+                                    <input type="text" id="propertyname" class="input-field" placeholder="Property Name" required>
+                                    
+                                    <!-- BHK Selection -->
+                                    <div class="mt-4">
+                                        <label class="block text-gray-700 mb-2">BHK Type</label>
+                                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                            <button type="button" class="select-btn" onclick="toggleSelection(this, 'bhk_type', '1')">1 BHK</button>
+                                            <button type="button" class="select-btn" onclick="toggleSelection(this, 'bhk_type', '2')">2 BHK</button>
+                                            <button type="button" class="select-btn" onclick="toggleSelection(this, 'bhk_type', '3')">3 BHK</button>
+                                            <button type="button" class="select-btn" onclick="toggleSelection(this, 'bhk_type', '3+')">3+ BHK</button>
+                                        </div>
+                                        <input type="hidden" id="bhk_type" required>
+                                    </div>
+
+                                    <!-- Build-up Area -->
+                                    <div class="mt-4">
+                                        <label class="block text-gray-700 mb-2">Build-up Area (sq ft)</label>
+                                        <input type="number" id="buildup_area" class="input-field" placeholder="Enter build-up area" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Possession Info -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Possession Info</h3>
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <button type="button" class="select-btn" onclick="toggleSelection(this, 'possession_status', 'Ready to Move')">Ready to Move</button>
+                                    <button type="button" class="select-btn" onclick="toggleSelection(this, 'possession_status', 'Under Construction')">Under Construction</button>
+                                </div>
+                                <input type="hidden" id="possession_status" required>
+                                <input type="date" id="possession_date" class="input-field" required>
+                            </div>
+
+                            <!-- Property Type -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Property Type</h3>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <button type="button" class="select-btn" onclick="toggleSelection(this, 'property_type', 'Industrial')">Industrial</button>
+                                    <button type="button" class="select-btn" onclick="toggleSelection(this, 'property_type', 'Commercial')">Commercial</button>
+                                    <button type="button" class="select-btn" onclick="toggleSelection(this, 'property_type', 'Open Space')">Open Space</button>
+                                    <button type="button" class="select-btn" onclick="toggleSelection(this, 'property_type', 'Special Economic Zone')">Special Economic Zone</button>
+                                </div>
+                                <input type="hidden" id="property_type" required>
+                            </div>
+
+                            <div class="mt-6">
+                                <button onclick="nextStep()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                                    Next Step
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 Form -->
+                    <div id="step2Form" class="form-container hidden">
+                        <div class="space-y-6">
+                            <!-- Price Details -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Price Details</h3>
+                                <div class="space-y-4">
+                                    <input type="number" id="property_price" class="input-field" placeholder="Property Price" required>
+                                    <input type="number" id="security_deposit" class="input-field" placeholder="Security Deposit (if any)" required>
+                                </div>
+                            </div>
+
+                            <!-- Property Photos -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Property Photos</h3>
+                                <input type="file" id="property_photos" class="input-field" accept="image/*" multiple required>
+                                <p class="text-sm text-gray-500 mt-2">You can upload multiple photos</p>
+                            </div>
+
+                            <!-- Additional Comments -->
+                            <div class="form-section p-6 rounded-lg">
+                                <h3 class="text-xl section-header mb-4">Additional Comments</h3>
+                                <textarea id="comments" class="input-field h-32" placeholder="Add any comments about the property (Optional)"></textarea>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <button onclick="previousStep()" class="w-1/2 bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                                    Previous
+                                </button>
+                                <button onclick="submitForm()" class="w-1/2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let progress = 0;
+        
+        function updateProgress() {
+            const totalFields = 11;
+            let filledFields = 0;
+            
+            ['username', 'city', 'locality', 'propertyname', 'bhk_type', 'buildup_area',
+             'possession_status', 'possession_date', 'property_type', 'property_price', 'security_deposit']
+            .forEach(field => {
+                if (document.getElementById(field).value) filledFields++;
+            });
+            
+            progress = Math.round((filledFields / totalFields) * 100);
+            
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('progressPercentage').textContent = `${progress}%`;
+            
+            updateProgressSteps();
+        }
+        
+        function updateProgressSteps() {
+            const steps = {
+                'basicDetailsProgress': ['username', 'city', 'locality', 'propertyname', 'bhk_type', 'buildup_area'],
+                'possessionProgress': ['possession_status', 'possession_date'],
+                'propertyTypeProgress': ['property_type'],
+                'priceProgress': ['property_price', 'security_deposit'],
+                'mediaProgress': ['property_photos']
+            };
+            
+            for (let [stepId, fields] of Object.entries(steps)) {
+                const step = document.getElementById(stepId);
+                const isComplete = fields.every(field => document.getElementById(field).value);
+                
+                step.classList.remove('completed', 'active');
+                if (isComplete) {
+                    step.classList.add('completed');
+                } else if (fields.some(field => document.getElementById(field).value)) {
+                    step.classList.add('active');
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const userEmail = localStorage.getItem("userEmail");
+            if (!userEmail) {
+                alert("You must be logged in to access the dashboard.");
+                window.location.href = "/login";
+                return;
+            }
+            // document.getElementById("userEmail").innerText = userEmail;
+        });
+
+        function toggleSelection(button, fieldId, value) {
+            const buttons = button.parentElement.querySelectorAll(".select-btn");
+            buttons.forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+            document.getElementById(fieldId).value = value;
+            updateProgress();
+        }
+
+        function nextStep() {
+            const requiredFields = ['username', 'city', 'locality', 'propertyname', 'possession_status', 
+                                  'possession_date', 'property_type', 'bhk_type', 'buildup_area'];
+            const isValid = requiredFields.every(field => {
+                const element = document.getElementById(field);
+                return element && element.value;
+            });
+
+            if (!isValid) {
+                alert('Please fill in all required fields before proceeding.');
+                return;
+            }
+
+            document.getElementById('step1Form').classList.add('hidden');
+            document.getElementById('step2Form').classList.remove('hidden');
+            document.getElementById('step1Indicator').classList.remove('active');
+            document.getElementById('step2Indicator').classList.add('active');
+        }
+
+        function previousStep() {
+            document.getElementById('step2Form').classList.add('hidden');
+            document.getElementById('step1Form').classList.remove('hidden');
+            document.getElementById('step2Indicator').classList.remove('active');
+            document.getElementById('step1Indicator').classList.add('active');
+        }
+
+        async function submitForm() {
+            const userEmail = localStorage.getItem("userEmail");
+            if (!userEmail) {
+                alert("You must be logged in to submit the form.");
+                window.location.href = "/login";
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('email', userEmail);
+            formData.append('username', document.getElementById('username').value);
+            formData.append('city', document.getElementById('city').value);
+            formData.append('locality', document.getElementById('locality').value);
+            formData.append('propertyname', document.getElementById('propertyname').value);
+            formData.append('bhk_type', document.getElementById('bhk_type').value);
+            formData.append('buildup_area', document.getElementById('buildup_area').value);
+            formData.append('possession_status', document.getElementById('possession_status').value);
+            formData.append('possession_date', document.getElementById('possession_date').value);
+            formData.append('property_type', document.getElementById('property_type').value);
+            formData.append('property_price', document.getElementById('property_price').value);
+            formData.append('security_deposit', document.getElementById('security_deposit').value);
+            formData.append('comments', document.getElementById('comments').value);
+
+            const propertyPhotos = document.getElementById('property_photos').files;
+            for (let i = 0; i < propertyPhotos.length; i++) {
+                formData.append('property_photos', propertyPhotos[i]);
+            }
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/save-property', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert('✅ Property details saved successfully!');
+                    window.location.href = '/';
+                } else {
+                    alert('❌ Error: ' + result.error);
+                }
+            } catch (error) {
+                alert('❌ Network error: ' + error.message);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputFields = document.querySelectorAll('input, textarea');
+            inputFields.forEach(field => {
+                field.addEventListener('input', updateProgress);
+            });
+            
+            updateProgress();
+            
+            const savedData = localStorage.getItem('propertyFormData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                Object.keys(data).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.value = data[key];
+                        updateProgress();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

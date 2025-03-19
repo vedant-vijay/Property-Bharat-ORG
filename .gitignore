@@ -1,0 +1,10 @@
+# Ignore the .env file
+.env
+
+# Ignore Python bytecode
+__pycache__/
+*.pyc
+
+# Ignore other files you don’t want to track
+*.log
+*.sqlite3

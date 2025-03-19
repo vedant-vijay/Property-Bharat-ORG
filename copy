@@ -1,0 +1,146 @@
+from flask import Flask, request, jsonify, render_template, redirect, url_for, session, abort
+from flask_mail import Mail
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+from flask_cors import CORS
+import os
+from datetime import timedelta
+from dotenv import load_dotenv
+from controllers.tp import send_email, store_email_otp, verify_otp1, resend_otp, store_password, login3
+
+# Load environment variables from .env file
+load_dotenv()
+
+app = Flask(__name__)
+CORS(app)
+
+# Secure Secret Key
+app.secret_key = os.getenv('SECRET_KEY')
+app.permanent_session_lifetime = timedelta(minutes=15)
+
+# Database Configuration
+db_path = os.getenv('DATABASE_URI', f'sqlite:///{os.path.join(os.path.abspath(os.getcwd()), "property.db")}')
+app.config['SQLALCHEMY_DATABASE_URI'] = db_path
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
+mail = Mail(app)
+
+# ============================== Models ==============================
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+
+class Property(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), nullable=False)
+    city = db.Column(db.String(100), nullable=False)
+    locality = db.Column(db.String(100), nullable=False)
+    propertyname = db.Column(db.String(100), nullable=False)
+    possession_status = db.Column(db.String(50))
+    possession_date = db.Column(db.String(20))
+    property_type = db.Column(db.String(50))
+    location_hub = db.Column(db.String(50))
+    ownership = db.Column(db.String(50))
+    deposit = db.Column(db.Integer)
+    comments = db.Column(db.Text)
+
+# Create database tables if they don't exist
+with app.app_context():
+    db.create_all()
+
+# ============================== Routes ==============================
+
+@app.route('/')
+def home():
+    return render_template("index.html")
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
+@app.route('/next')
+def next():
+    return render_template('next.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+# ============================== Authentication Routes ==============================
+
+@app.route('/login1', methods=['POST'])
+def login1():
+    data = request.get_json()
+    email1 = data.get('username')
+    password = data.get('password')
+    if login3(email1, password):
+        return jsonify({'success': True}), 200
+    return abort(401, description="Invalid credentials")
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('home'))
+
+# ============================== OTP Routes ==============================
+
+@app.route('/request-otp', methods=['POST'])
+def request_otp():
+    email1 = request.json.get('email_or_mobile')
+    try:
+        otp2 = send_email(email1)
+        if otp2 == 0:
+            return jsonify({'tp': True}), 200
+        else:
+            store_email_otp(email1, otp2)
+            return jsonify({'tp2': True}), 200
+    except Exception as e:
+        return abort(500, description=f"Failed to send email: {str(e)}")
+
+@app.route('/verify-otp', methods=['POST'])
+def verify_otp():
+    email = request.json.get('email_or_mobile')
+    password = request.json.get('password')
+    entered_otp = request.json.get('otp')
+    if verify_otp1(email, entered_otp):
+        store_password(email, password)
+        return jsonify({"message": "OTP verified successfully!"}), 200
+    return abort(400, description="Invalid or expired OTP")
+
+# ============================== Property Routes ==============================
+
+@app.route('/post-property', methods=['GET', 'POST'])
+def post_property():
+    if request.method == 'GET':
+        return render_template("post-property.html")
+
+    data = request.get_json()
+    try:
+        new_property = Property(
+            username=session.get('user'),
+            city=data.get('city'),
+            locality=data.get('locality'),
+            propertyname=data.get('propertyname'),
+            possession_status=data.get('possession_status'),
+            possession_date=data.get('possession_date'),
+            property_type=data.get('property_type'),
+            location_hub=data.get('location_hub'),
+            ownership=data.get('ownership'),
+            deposit=data.get('deposit'),
+            comments=data.get('comments')
+        )
+        db.session.add(new_property)
+        db.session.commit()
+        return jsonify({'message': 'Property saved successfully'}), 201
+    except Exception as e:
+        db.session.rollback()
+        return abort(500, description=str(e))
+
+# ============================== Run App ==============================
+
+if __name__ == '__main__':
+    app.run(debug=True)

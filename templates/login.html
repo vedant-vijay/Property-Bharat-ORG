@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Property Bharat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+
+        .input-field {
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            transform: scale(1.05);
+            border-color: #f97316;
+        }
+
+        .button-hover:hover {
+            transform: scale(1.05);
+        }
+
+        .form-section {
+            background: url('https://source.unsplash.com/1600x900/?real-estate,luxury') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-right: 5%;
+        }
+
+        .step {
+            background-color: #f97316;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .heading-text {
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Form Section -->
+    <section class="form-section w-full h-screen bg-cover bg-center bg-no-repeat" 
+        style="background-image: url('/static/images/background.png');">
+
+        <!-- Website Logo (Top Left Corner) -->
+        <div class="absolute top-4 left-6">
+            <a href="/" class="flex items-center space-x-2">
+                <img src="/static/images/logo.png" alt="Property Bharat Logo" 
+                    class="h-14 md:h-16 lg:h-18 w-auto transition-all duration-300">
+            </a>
+        </div>
+    
+        
+        <!-- Login Card -->
+        <div class="fixed top-1/2 right-[12%] transform -translate-y-1/2 glass-box p-10 max-w-md w-full z-50 transition-all border border-gray-200 bg-white bg-opacity-90 backdrop-blur-lg shadow-lg">
+            <!-- Logo & Heading -->
+            <div class="flex items-center justify-center space-x-3 mb-6">
+                <img src="https://cdn-icons-png.flaticon.com/512/2933/2933246.png" class="h-12 w-12 animate-bounce">
+                <h2 class="text-3xl font-bold heading-text">Login to Property Bharat</h2>
+            </div>
+            <p class="text-gray-700 text-center text-sm mb-4">Access your account securely</p>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-5">
+                <div>
+                    <label class="block text-gray-800 font-semibold">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required
+                        class="input-field w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 bg-white text-gray-800 placeholder-gray-400">
+                </div>
+
+                <div>
+                    <label class="block text-gray-800 font-semibold">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required
+                        class="input-field w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 bg-white text-gray-800 placeholder-gray-400">
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-orange-500 text-white font-medium py-3 rounded-lg button-hover transition-all hover:bg-green-500">
+                    Login
+                </button>
+
+                <p class="text-sm text-gray-600 mt-4 text-center">Don't have an account? 
+                    <a href="/register" class="text-orange-500 font-medium hover:underline">Register</a>
+                </p>
+            </form>
+        </div>
+    </section>
+
+
+    <!-- How It Works Section -->
+    <section class="how-it-works w-1/2 absolute left-0 top-full py-20 pl-10">
+        <h2 class="text-4xl font-bold mb-6 text-center text-gray-800">How It Works</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="step flex flex-col items-center">
+                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828395.png" class="h-12 w-12 mb-3">
+                <h3 class="text-xl font-semibold">Step 1: Login</h3>
+                <p class="text-white text-center">Access your account securely</p>
+            </div>
+
+            <div class="step flex flex-col items-center">
+                <img src="https://cdn-icons-png.flaticon.com/512/619/619153.png" class="h-12 w-12 mb-3">
+                <h3 class="text-xl font-semibold">Step 2: Browse Properties</h3>
+                <p class="text-white text-center">Explore available listings</p>
+            </div>
+
+            <div class="step flex flex-col items-center">
+                <img src="https://cdn-icons-png.flaticon.com/512/726/726496.png" class="h-12 w-12 mb-3">
+                <h3 class="text-xl font-semibold">Step 3: Connect</h3>
+                <p class="text-white text-center">Interact with property owners</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section w-1/2 absolute left-0 top-[calc(100%+500px)] py-20 pl-10">
+        <h2 class="text-4xl font-bold mb-6 text-center text-gray-800">Frequently Asked Questions</h2>
+        
+        <div class="space-y-6">
+            <div class="bg-white p-6 rounded-lg shadow-lg transition-all hover:scale-105 flex flex-col items-start border border-gray-200">
+                <h3 class="text-xl font-semibold flex items-center text-gray-800">
+                    <img src="https://cdn-icons-png.flaticon.com/512/545/545682.png" class="h-6 w-6 mr-3">
+                    How do I reset my password?
+                </h3>
+                <p class="text-gray-600 mt-2">Click on "Forgot Password" and follow the instructions sent to your email.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg transition-all hover:scale-105 flex flex-col items-start border border-gray-200">
+                <h3 class="text-xl font-semibold flex items-center text-gray-800">
+                    <img src="https://cdn-icons-png.flaticon.com/512/545/545682.png" class="h-6 w-6 mr-3">
+                    Is my information secure?
+                </h3>
+                <p class="text-gray-600 mt-2">Yes, we use industry-standard encryption to protect your data.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg transition-all hover:scale-105 flex flex-col items-start border border-gray-200">
+                <h3 class="text-xl font-semibold flex items-center text-gray-800">
+                    <img src="https://cdn-icons-png.flaticon.com/512/545/545682.png" class="h-6 w-6 mr-3">
+                    Can I use multiple devices?
+                </h3>
+                <p class="text-gray-600 mt-2">Yes, you can access your account from any device securely.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener("scroll", function() {
+            const animateElements = document.querySelectorAll(".step, .faq-section div");
+            animateElements.forEach((element) => {
+                const position = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (position < windowHeight - 50) {
+                    element.classList.add("visible");
+                }
+            });
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+
+            if (username === "" || password === "") {
+                alert("Please enter your username and password.");
+                return;
+            }
+
+            fetch("http://127.0.0.1:5000/login1", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    localStorage.setItem("userEmail", username);
+                    localStorage.setItem("loginTime", Date.now());
+
+                    setTimeout(() => {
+                        localStorage.removeItem("userEmail");
+                        localStorage.removeItem("loginTime");
+                        alert("Session expired. Please log in again.");
+                        window.location.href = "/login";
+                    }, 3600000);
+                    
+                    alert("✅ Login Successful!");
+                    if(data.ty==1){
+                        window.location.href = "/dashboard"; //res and owner
+                    }else if(data.ty==2){
+                        window.location.href = "/dashboard-com"; // com and owner 
+                    }else if(data.ty==3){
+                        window.location.href = "/dashboard-redev"; // redev 
+                    }else if(data.ty==4){
+                        window.location.href = "/dashboard-broker"; //broker
+                    }
+                    
+                } else {
+                    alert("❌ Error: " + data.error);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("❌ Something went wrong. Please try again.");
+            });
+        });
+    </script>
+</body>
+</html>
