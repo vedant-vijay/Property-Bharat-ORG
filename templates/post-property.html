@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register | Property Bharat</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="script.js" defer></script>
-    <link rel="stylesheet" href="post-property.css"> 
     <style>
         /* Custom Styling */
         body {
@@ -188,25 +186,52 @@
 </head>
 <body>
     <!-- Form Section with Background -->
-    <section class="form-section w-full h-screen bg-cover bg-center bg-no-repeat" 
-        style="background-image: url('/static/images/background.png');">
+    <section class="form-section w-full h-screen bg-cover bg-center bg-no-repeat flex items-center justify-between px-12 relative" 
+    style="background-image: url('/static/images/background.png');">
 
-        <!-- Website Logo (Top Left Corner) -->
-        <div class="absolute top-4 left-6">
-            <a href="/" class="flex items-center space-x-2">
-                <img src="/static/images/logo.png" alt="Property Bharat Logo" 
-                    class="h-14 md:h-16 lg:h-18 w-auto transition-all duration-300">
-            </a>
-        </div>
-        <!-- Registration Card with Scrollable Content -->
-        <div class="fixed top-1/2 right-[12%] transform -translate-y-1/2 bg-white backdrop-blur-lg shadow-2xl rounded-xl p-10 max-w-md w-full z-50 transition-all border border-gray-700 
-        max-h-[80vh] overflow-y-auto scrollbar-thin scrollbar-thumb-green-500 scrollbar-track-green-300">
-                <!-- Logo & Heading -->
-                <div class="flex items-center justify-center space-x-3 mb-6">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2933/2933246.png" class="h-12 w-12 animate-bounce">
-                    <h2 class="text-3xl font-bold text-yellow-400">Register at Property Bharat</h2>
-                </div>
-                <p class="text-gray-300 text-center text-sm mb-4">Find or list your dream property easily.</p>
+
+            <!-- Dark Overlay for Visibility -->
+            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+            <!-- Website Logo (Top Left Corner) -->
+            <div class="absolute top-6 left-6 z-20">
+                <a href="/" class="flex items-center space-x-2">
+                    <img src="/static/images/logo.png" alt="Property Bharat Logo"
+                        class="h-16 md:h-20 lg:h-24 w-auto transition-all duration-300 
+                        drop-shadow-[0_0_20px_rgba(255,255,255,0.9)] 
+                        brightness-150 contrast-200 saturate-200">
+                </a>
+            </div>
+            
+            
+
+            <!-- Left Side: Tagline Section -->
+            <div class="hidden lg:flex flex-col justify-center items-start w-1/2 h-full relative z-10 pr-16">
+                <h1 class="text-6xl font-extrabold text-white leading-snug drop-shadow-3xl">
+                    Your Dream Home <br> is Just a Click Away!
+                </h1>
+                <p class="text-2xl text-gray-100 mt-6 max-w-lg drop-shadow-xl font-semibold">
+                    Discover, buy, or rent properties effortlessly with  
+                    <span class="text-yellow-400 font-extrabold">Property Bharat</span>. 
+                    Get the best real estate deals today!
+                </p>
+            </div>
+            
+        <!-- Registration Card -->
+            <div id="registerCard" class="lg:fixed lg:right-[12%] lg:top-1/2 lg:transform lg:-translate-y-1/2 
+            bg-white backdrop-blur-lg shadow-2xl rounded-xl p-10 max-w-md w-full z-50 transition-all 
+            border border-gray-700 max-h-[80vh] overflow-y-auto scrollbar-thin scrollbar-thumb-green-500 
+            scrollbar-track-green-300 
+
+            sm:relative sm:w-full sm:mx-auto sm:top-0 sm:transform-none">
+
+            <!-- Logo & Heading -->
+            <div class="flex items-center justify-center space-x-3 mb-6">
+                <img src="https://cdn-icons-png.flaticon.com/512/2933/2933246.png" class="h-12 w-12 animate-bounce">
+                <h2 class="text-3xl font-bold text-yellow-400 text-center">Register at Property Bharat</h2>
+            </div>
+
+            <p class="text-gray-300 text-center text-sm mb-4">Find or list your dream property easily.</p>
 
                 <!-- Registration Form -->
                 <form id="registerForm" class="space-y-5">
@@ -224,41 +249,44 @@
 
                     <!-- Property Type Selection -->
                     <div>
-                        <label  class="block text-lg font-semibold">Property Type</label>
+                        <label class="block text-lg font-semibold">Property Type</label>
                         <div class="grid grid-cols-2 gap-4 mt-2">
                             <button type="button" id="residentialBtn" class="toggle-btn property-category">
-                                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" class="w-6 h-6"> Residential
+                                <img src="https://cdn-icons-png.flaticon.com/512/616/616490.png" class="w-6 h-6"> Residential
                             </button>
                             <button type="button" id="commercialBtn" class="toggle-btn property-category">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3144/3144456.png" class="w-6 h-6"> Commercial
+                                <img src="https://cdn-icons-png.flaticon.com/512/2991/2991201.png" class="w-6 h-6"> Commercial
                             </button>
                         </div>
                     </div>
+                                        
                    
                     <!-- Commercial Property Type Selection (Appears Only If Commercial is Selected) -->
                     <div id="commercialPropertySection" class="mt-4 hidden">
                         <label class="block text-lg font-semibold">Select Property Type</label>
                         <div class="grid grid-cols-3 gap-4 mt-2">
                             <button type="button" class="property-type-btn" data-type="Office">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3065/3065702.png" class="w-8 h-8"> Office
+                                <img src="https://cdn-icons-png.flaticon.com/512/4149/4149673.png" class="w-8 h-8"> Office
                             </button>
                             <button type="button" class="property-type-btn" data-type="Retail Shop">
-                                <img src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png" class="w-8 h-8"> Retail Shop
+                                <img src="https://cdn-icons-png.flaticon.com/512/3061/3061341.png" class="w-8 h-8"> Retail Shop
                             </button>
                             <button type="button" class="property-type-btn" data-type="Showroom">
-                                <img src="https://cdn-icons-png.flaticon.com/512/1533/1533442.png" class="w-8 h-8"> Showroom
+                                <img src="https://cdn-icons-png.flaticon.com/512/4727/4727393.png" class="w-8 h-8"> Showroom
                             </button>
                             <button type="button" class="property-type-btn" data-type="Warehouse">
-                                <img src="https://cdn-icons-png.flaticon.com/512/2620/2620404.png" class="w-8 h-8"> Warehouse
+                                <img src="https://cdn-icons-png.flaticon.com/512/1198/1198313.png" class="w-8 h-8"> Warehouse
                             </button>
                             <button type="button" class="property-type-btn" data-type="Plot">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3144/3144456.png" class="w-8 h-8"> Plot
+                                <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" class="w-8 h-8"> Plot
                             </button>
                             <button type="button" class="property-type-btn" data-type="Others">
-                                <img src="https://cdn-icons-png.flaticon.com/512/1521/1521710.png" class="w-8 h-8"> Others
+                                <img src="https://cdn-icons-png.flaticon.com/512/3196/3196637.png" class="w-8 h-8"> Others
                             </button>
                         </div>
                     </div>
+                    
+                    
 
                     <!-- JavaScript for Single Selection -->
                     <script>
@@ -285,13 +313,14 @@
                         <label class="block text-lg font-semibold mt-4">Looking For</label>
                         <div class="grid grid-cols-2 gap-4 mt-2">
                             <button type="button" id="rentBtn" class="toggle-btn selection-type">
-                                <img src="https://cdn-icons-png.flaticon.com/512/2420/2420055.png" class="w-5 h-5"> Rent
+                                <img src="https://cdn-icons-png.flaticon.com/512/3022/3022525.png" class="w-5 h-5"> Rent
                             </button>
                             <button type="button" id="sellBtn" class="toggle-btn selection-type">
-                                <img src="https://cdn-icons-png.flaticon.com/512/2331/2331713.png" class="w-5 h-5"> Sell
+                                <img src="https://cdn-icons-png.flaticon.com/512/2331/2331936.png" class="w-5 h-5"> Sell
                             </button>
                         </div>
                     </div>
+                    
 
                     <!-- JavaScript for Exclusive Selection and Future Functionality -->
                     <script>
@@ -557,6 +586,7 @@
                                 console.log("🔍 OTP Verification Response:", result);
 
                                 if (response.ok) {
+                                    alert("✅ OTP verified! Redirecting...");
 
                                     // Store user info in localStorage
                                     localStorage.setItem("userEmail", registerInput.value.trim());
@@ -619,7 +649,7 @@
     </section>
 
     <!-- How It Works Section -->
-    <section class="how-it-works w-1/2 absolute left-0 top-full py-20 text-gray-800 pl-10">
+    <section class="how-it-works w-1/2 relative py-20 text-gray-800 pl-10">
         <h2 class="text-4xl font-bold mb-6 text-center text-gray-800">How It Works</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="step bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
@@ -654,8 +684,10 @@
         </script>
     </section>
 
+
     <!-- FAQ Section -->
-    <section class="faq-section w-1/2 absolute left-0 top-[calc(100%+500px)] py-20 text-gray-800 pl-10">
+    <section class="faq-section w-1/2 relative py-20 text-gray-800 pl-10">
+
         <h2 class="text-4xl font-bold mb-6 text-center text-gray-800">Frequently Asked Questions</h2>
         
         <div class="space-y-6">
@@ -696,5 +728,84 @@
             });
         </script>
     </section>
+    <footer class="bg-green-800 text-yellow-100 py-12 w-full">
+        <div class="container mx-auto px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                
+                <!-- Company Info -->
+                <div data-aos="fade-up">
+                    <h3 class="text-2xl font-bold text-yellow-400">🏠 Property Bharat</h3>
+                    <p class="mt-3">Your trusted real estate partner.</p>
+                    <p class="mt-1">© 2025 Property Bharat. All rights reserved.</p>
+                </div>
+    
+                <!-- Quick Links -->
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-bold text-yellow-400">🔗 Quick Links</h3>
+                    <ul class="mt-3 space-y-2">
+                        <li><a href="#" class="hover:text-yellow-300 transition duration-300">🏡 Home</a></li>
+                        <li><a href="#" class="hover:text-yellow-300 transition duration-300">💰 Buy</a></li>
+                        <li><a href="#" class="hover:text-yellow-300 transition duration-300">📍 Rent</a></li>
+                        <li><a href="#" class="hover:text-yellow-300 transition duration-300">🏢 Commercial</a></li>
+                    </ul>
+                </div>
+    
+                <!-- Contact Info -->
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-bold text-yellow-400">📞 Contact Us</h3>
+                    <p class="mt-3">📧 Email: support@propertybharat.com</p>
+                    <p class="mt-1">📱 Phone: +91 98765 43210</p>
+                </div>
+            </div>
+    
+            <!-- Bottom Section -->
+            <div class="mt-10 border-t border-yellow-500 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <!-- Static Text -->
+                <p class="text-yellow-300 text-sm text-center md:text-left">
+                    "Find your perfect home with us – Trusted by thousands of happy homeowners!"
+                </p>
+    
+                <!-- Social Media Links -->
+                <div class="mt-4 md:mt-0 flex space-x-5">
+                    <a href="#" class="text-white hover:text-yellow-400 text-2xl transition"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white hover:text-yellow-400 text-2xl transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white hover:text-yellow-400 text-2xl transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white hover:text-yellow-400 text-2xl transition"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+            
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const registerCard = document.getElementById("registerCard");
+            const footer = document.querySelector("footer");
+
+            function checkFooterVisibility() {
+                const footerRect = footer.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+
+                if (footerRect.top < windowHeight) {
+                    registerCard.classList.add("stop-fixed");
+                    registerCard.style.top = (footerRect.top - registerCard.offsetHeight - 20) + "px";
+                } else {
+                    registerCard.classList.remove("stop-fixed");
+                    registerCard.style.top = "50%";
+                }
+            }
+
+            window.addEventListener("scroll", checkFooterVisibility);
+        });
+    </script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            offset: 100,
+        });
+    </script>
+    
+
 </body>
 </html>
