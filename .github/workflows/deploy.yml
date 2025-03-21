@@ -27,6 +27,9 @@ jobs:
           git pull origin main
           source venv/bin/activate
           pip install -r requirements.txt
+          echo "installed packages"
           sudo systemctl restart flask-app
+          echo "restarted flask app"
           sudo systemctl restart nginx
+          echo "restarted nginx"
         EOF
