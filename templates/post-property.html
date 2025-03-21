@@ -195,15 +195,12 @@
 
             <!-- Website Logo (Top Left Corner) -->
             <div class="absolute top-6 left-6 z-20">
-                <a href="/" class="flex items-center space-x-2">
+                <a href="/" class="flex items-center space-x-3 group">
                     <img src="/static/images/logo.png" alt="Property Bharat Logo"
-                        class="h-16 md:h-20 lg:h-24 w-auto transition-all duration-300 
-                        drop-shadow-[0_0_20px_rgba(255,255,255,0.9)] 
-                        brightness-150 contrast-200 saturate-200">
+                        class="h-16 md:h-20 lg:h-24 w-auto transition-transform duration-300 ease-in-out 
+                        group-hover:scale-105">
                 </a>
-            </div>
-            
-            
+            </div>         
 
             <!-- Left Side: Tagline Section -->
             <div class="hidden lg:flex flex-col justify-center items-start w-1/2 h-full relative z-10 pr-16">
@@ -490,8 +487,25 @@
                                 input.type = "text";
                                 input.maxLength = 1;
                                 input.className = "otp-input w-14 h-14 text-center text-lg border border-gray-500 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-yellow-400";
+                                // Handle input event
+                                input.addEventListener("input", function () {
+                                    if (this.value.length === 1) {
+                                        const nextInput = this.nextElementSibling;
+                                        if (nextInput) nextInput.focus();
+                                    }
+                                });
+
+                                // Handle backspace
+                                input.addEventListener("keydown", function (e) {
+                                    if (e.key === "Backspace" && this.value === "") {
+                                        const prevInput = this.previousElementSibling;
+                                        if (prevInput) prevInput.focus();
+                                    }
+                                });
                                 otpInputsContainer.appendChild(input);
                             }
+                            // Auto-focus on the first input
+                            otpInputsContainer.firstChild.focus();
                         }
 
                         // Function to send OTP request to Flask backend
