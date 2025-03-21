@@ -1,35 +1,32 @@
-name: Deploy Flask to EC2
+name: Deploy Flask App to EC2
 
 on:
   push:
     branches:
-      - main
+      - main  # Change this if you're using a different branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
+    - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Set up SSH Key
+    - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
     - name: Deploy to EC2
       run: |
-        ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-          cd Property-Bharat-ORG
-          git pull origin main
+        ssh ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+          cd ~/Property-Bharat-ORG
+          git pull origin main  # Pull latest code
           source venv/bin/activate
-          pip install -r requirements.txt
-          echo "installed packages"
-          sudo systemctl restart flask-app
-          echo "restarted flask app"
-          sudo systemctl restart nginx
-          echo "restarted nginx"
+          pip install -r requirements.txt  # Install dependencies
+          sudo systemctl restart flask  # Restart Flask app
+          sudo systemctl restart nginx  # Restart Nginx
         EOF
