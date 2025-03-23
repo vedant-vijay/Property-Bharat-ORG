@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 
 # MongoDB Configuration
-app.config["MONGO_URI"] = "mongodb+srv://vedant:nikhil@cluster0.2bsjy.mongodb.net/mydatabase?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = "mongodb+srv://developer:xasHIMQNJvO8zNuq@radhekrishna.a38np.mongodb.net/mydatabase?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 
 
@@ -23,8 +23,8 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 # Email Configuration
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_USER = "verdantrokade@gmail.com"
-EMAIL_PASSWORD = "jeiglcxeviwaducq"
+EMAIL_USER = "propertybharatinfo@gmail.com"
+EMAIL_PASSWORD = "zboyknkxakdcjxme"
 
 
 ################################    pages ####################################
