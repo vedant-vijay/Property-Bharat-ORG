@@ -535,7 +535,7 @@
                             setButtonState(sendOtpBtn, "Sending...");
 
                             try {
-                                const response = await fetch("http://15.206.232.15/request-otp", {
+                                const response = await fetch("https://15.206.232.15/request-otp", {
                                     method: "POST",
                                     headers: { "Content-Type": "application/json" },
                                     body: JSON.stringify({ email_or_mobile: userInput }),
@@ -582,7 +582,7 @@
                             console.log(userRole1)
                             
                             try {
-                                const response = await fetch("http://15.206.232.15/verify-otp", {
+                                const response = await fetch("https://15.206.232.15/verify-otp", {
                                     method: "POST",
                                     headers: { "Content-Type": "application/json" },
                                     body: JSON.stringify({ 
