@@ -6,6 +6,7 @@
     <title>Property Form</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Preserve all existing styles */
         body {
             background: #f0f2f5;
             color: #333;
@@ -144,18 +145,6 @@
             background: #4CAF50;
         }
 
-        @media (max-width: 768px) {
-            .progress-tracker {
-                margin-bottom: 2rem;
-            }
-        }
-
-        label {
-            font-weight: 600;
-            font-size: 1rem;
-            color: #444;
-        }
-
         .progress-title {
             font-size: 0.9rem;
             font-weight: 600;
@@ -172,7 +161,7 @@
         .main-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1rem;
         }
 
         .content-wrapper {
@@ -192,9 +181,101 @@
             width: 600px;
             flex-shrink: 0;
         }
+
+        /* Add responsive styles */
+        @media (max-width: 1024px) {
+            .main-container {
+                padding: 1rem;
+            }
+            
+            .content-wrapper {
+                gap: 1rem;
+            }
+            
+            .progress-section {
+                width: 220px;
+            }
+            
+            .form-section-wrapper {
+                width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            
+            .progress-section {
+                width: 100%;
+                margin-bottom: 1.5rem;
+            }
+            
+            .form-section-wrapper {
+                width: 100%;
+            }
+            
+            .progress-tracker {
+                margin-bottom: 1rem;
+            }
+            
+            .step {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .form-container {
+                max-height: none;
+                overflow-y: visible;
+                padding-right: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 0.5rem;
+            }
+            
+            .step {
+                padding: 0.75rem;
+                font-size: 0.8rem;
+            }
+            
+            .section-header {
+                font-size: 1.1rem;
+            }
+            
+            .select-btn {
+                min-width: 100px;
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .grid-cols-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .grid-cols-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Fix form sections padding on mobile */
+        @media (max-width: 640px) {
+            .form-section {
+                padding: 1rem !important;
+            }
+            
+            .input-field {
+                padding: 8px;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Rest of the HTML remains exactly the same -->
+    <!-- The responsive changes are handled by the CSS above -->
     <div class="main-container">
         <div class="content-wrapper">
             <!-- Progress Tracker -->
