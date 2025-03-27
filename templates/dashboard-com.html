@@ -256,24 +256,25 @@
                                 </div>
                             </div>
 
-                            <!-- Possession Info -->
+                           <!-- Possession Info -->
                             <div class="form-section p-6 rounded-lg">
                                 <h3 class="text-xl section-header mb-4">Possession Info</h3>
-                                <div class="grid grid-cols-2 gap-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <button type="button" class="select-btn" onclick="selectOption('possession', 'Ready to Move')">Ready to Move</button>
                                     <button type="button" class="select-btn" onclick="selectOption('possession', 'Under Construction')">Under Construction</button>
                                 </div>
                                 <input type="hidden" id="possession" required>
                             </div>
 
-                            <!-- Property Type -->
+
+                           <!-- Property Type -->
                             <div class="form-section p-6 rounded-lg">
                                 <h3 class="text-xl section-header mb-4">Property Type</h3>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <button type="button" class="select-btn" onclick="selectOption('propertyType', 'Industrial')">Industrial</button>
-                                    <button type="button" class="select-btn" onclick="selectOption('propertyType', 'Commercial')">Commercial</button>
-                                    <button type="button" class="select-btn" onclick="selectOption('propertyType', 'Open Space')">Open Space</button>
-                                    <button type="button" class="select-btn" onclick="selectOption('propertyType', 'SEZ')">SEZ</button>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+                                    <button type="button" class="select-btn w-full py-3 px-4 border rounded-lg" onclick="selectOption('propertyType', 'Industrial')">Industrial</button>
+                                    <button type="button" class="select-btn w-full py-3 px-4 border rounded-lg" onclick="selectOption('propertyType', 'Commercial')">Commercial</button>
+                                    <button type="button" class="select-btn w-full py-3 px-4 border rounded-lg" onclick="selectOption('propertyType', 'Open Space')">OpenSpace</button>
+                                    <button type="button" class="select-btn w-full py-3 px-4 border rounded-lg" onclick="selectOption('propertyType', 'SEZ')">SEZ</button>
                                 </div>
                                 <input type="hidden" id="propertyType" required>
                             </div>
@@ -327,10 +328,10 @@
                             <!-- Ownership -->
                             <div class="form-section p-6 rounded-lg">
                                 <h3 class="text-xl section-header mb-4">Ownership</h3>
-                                <div class="grid grid-cols-3 gap-4">
-                                    <button type="button" class="select-btn" onclick="selectOption('ownership', 'Free Hold')">Free Hold</button>
-                                    <button type="button" class="select-btn" onclick="selectOption('ownership', 'Lease Hold')">Lease Hold</button>
-                                    <button type="button" class="select-btn" onclick="selectOption('ownership', 'Cooperative Society')">Cooperative Society</button>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                                    <button type="button" class="select-btn w-full py-3 px-4 border rounded-lg" onclick="selectOption('ownership', 'Free Hold')">Free Hold</button>
+                                    <button type="button" class="select-btn w-full py-3 px-4 border rounded-lg" onclick="selectOption('ownership', 'Lease Hold')">Lease Hold</button>
+                                    <button type="button" class="select-btn w-full py-3 px-4 border rounded-lg" onclick="selectOption('ownership', 'Cooperative Society')">Cooperative Society</button>
                                 </div>
                                 <input type="hidden" id="ownership" required>
                             </div>
