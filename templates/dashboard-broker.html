@@ -218,75 +218,73 @@
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="content-wrapper">
-            <!-- Progress Tracker -->
-            <div class="progress-section">
-                <div class="progress-tracker bg-white p-4 rounded-xl shadow-lg h-fit">
-                    <h2 class="text-lg font-bold mb-4 text-gray-800">Progress</h2>
-                    <div class="progress-steps">
-                        <div id="userTypeProgress" class="progress-step active">
-                            <div class="progress-line"></div>
-                            <h3 class="progress-title">User Type</h3>
-                            <p class="progress-desc">Tell us about you</p>
-                        </div>
-                        <div id="userInfoProgress" class="progress-step">
-                            <div class="progress-line"></div>
-                            <h3 class="progress-title">User Info</h3>
-                            <p class="progress-desc">Personal Details</p>
-                        </div>
+    <div class="main-container flex flex-col md:flex-row items-center md:items-start p-4 md:p-8">
+        <!-- Progress Tracker -->
+        <div class="progress-section w-full md:w-1/3 mb-6 md:mb-0">
+            <div class="progress-tracker bg-white p-4 md:p-6 rounded-xl shadow-lg">
+                <h2 class="text-lg md:text-xl font-bold mb-4 text-gray-800">Progress</h2>
+                <div class="progress-steps space-y-4">
+                    <div id="userTypeProgress" class="progress-step active">
+                        <div class="progress-line"></div>
+                        <h3 class="progress-title text-sm md:text-base">User Type</h3>
+                        <p class="progress-desc text-xs md:text-sm">Tell us about you</p>
                     </div>
-                    <!-- Progress Percentage -->
-                    <div class="mt-4 p-3 bg-gray-50 rounded-lg">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="text-sm font-semibold">Complete</span>
-                            <span id="progressPercentage" class="text-green-600 font-bold text-sm">0%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                            <div id="progressBar" class="bg-green-600 h-1.5 rounded-full" style="width: 0%"></div>
-                        </div>
+                    <div id="userInfoProgress" class="progress-step">
+                        <div class="progress-line"></div>
+                        <h3 class="progress-title text-sm md:text-base">User Info</h3>
+                        <p class="progress-desc text-xs md:text-sm">Personal Details</p>
+                    </div>
+                </div>
+                <!-- Progress Percentage -->
+                <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-sm font-semibold">Complete</span>
+                        <span id="progressPercentage" class="text-green-600 font-bold text-sm">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-1.5">
+                        <div id="progressBar" class="bg-green-600 h-1.5 rounded-full" style="width: 0%"></div>
                     </div>
                 </div>
             </div>
-
-            <!-- Main Form Container -->
-            <div class="form-section-wrapper">
-                <div class="bg-white p-8 rounded-xl shadow-lg">
-                    <!-- Step 1: Tell us about you -->
-                    <div id="step1Form" class="form-container">
-                        <div class="form-section p-6 rounded-lg">
-                            <h3 class="text-xl section-header mb-4">Tell us about you</h3>
-                            <div class="grid grid-cols-3 gap-4">
-                                <button type="button" class="select-btn" onclick="toggleSelection(this, 'user_type', 'Builder')">Builder</button>
-                                <button type="button" class="select-btn" onclick="toggleSelection(this, 'user_type', 'Broker')">Broker</button>
-                                <button type="button" class="select-btn" onclick="toggleSelection(this, 'user_type', 'Owner')">Owner</button>
-                            </div>
-                            <input type="hidden" id="user_type" required>
+        </div>
+    
+        <!-- Main Form Container -->
+        <div class="form-section-wrapper w-full md:w-2/3 lg:w-1/2">
+            <div class="bg-white p-4 md:p-8 rounded-xl shadow-lg">
+                <!-- Step 1: Tell us about you -->
+                <div id="step1Form" class="form-container">
+                    <div class="form-section p-4 md:p-6 rounded-lg">
+                        <h3 class="text-lg md:text-xl section-header mb-4">Tell us about you</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <button type="button" class="select-btn py-2 px-4 bg-gray-200 rounded-md" onclick="toggleSelection(this, 'user_type', 'Builder')">Builder</button>
+                            <button type="button" class="select-btn py-2 px-4 bg-gray-200 rounded-md" onclick="toggleSelection(this, 'user_type', 'Broker')">Broker</button>
+                            <button type="button" class="select-btn py-2 px-4 bg-gray-200 rounded-md" onclick="toggleSelection(this, 'user_type', 'Owner')">Owner</button>
                         </div>
-
-                        <!-- Step 2: User Information -->
-                        <div class="form-section p-6 rounded-lg mt-6">
-                            <h3 class="text-xl section-header mb-4">User Information</h3>
-                            <div class="space-y-4">
-                                <input type="text" id="city" class="input-field" placeholder="City" required>
-                                <input type="text" id="name" class="input-field" placeholder="Name" required>
-                                <input type="tel" id="mobile" class="input-field" placeholder="Mobile Number" required>
-                                <input type="text" id="firm_name" class="input-field" placeholder="Firm Name" required>
-                                <input type="text" id="business_since" class="input-field" placeholder="In Business Since" required>
-                            </div>
+                        <input type="hidden" id="user_type" required>
+                    </div>
+    
+                    <!-- Step 2: User Information -->
+                    <div class="form-section p-4 md:p-6 rounded-lg mt-4 md:mt-6">
+                        <h3 class="text-lg md:text-xl section-header mb-4">User Information</h3>
+                        <div class="space-y-4">
+                            <input type="text" id="city" class="input-field w-full p-3 border rounded-md" placeholder="City" required>
+                            <input type="text" id="name" class="input-field w-full p-3 border rounded-md" placeholder="Name" required>
+                            <input type="tel" id="mobile" class="input-field w-full p-3 border rounded-md" placeholder="Mobile Number" required>
+                            <input type="text" id="firm_name" class="input-field w-full p-3 border rounded-md" placeholder="Firm Name" required>
+                            <input type="text" id="business_since" class="input-field w-full p-3 border rounded-md" placeholder="In Business Since" required>
                         </div>
-
-                        <div class="mt-6">
-                            <button onclick="submitForm()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
-                                Submit
-                            </button>
-                        </div>
+                    </div>
+    
+                    <div class="mt-6">
+                        <button onclick="submitForm()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                            Submit
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    
     <script>
         let progress = 0;
         
