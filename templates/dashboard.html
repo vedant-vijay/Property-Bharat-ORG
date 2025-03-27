@@ -374,7 +374,7 @@
                                     <button type="button" class="select-btn" onclick="toggleSelection(this, 'possession_status', 'Under Construction')">Under Construction</button>
                                 </div>
                                 <input type="hidden" id="possession_status" required>
-                                <input type="date" id="possession_date" class="input-field" required>
+                                <input type="text" id="possession_date" class="input-field" placeholder="DD/MM/YYYY" onfocus="(this.type='date')" onblur="(this.type='text')">
                             </div>
 
                             <!-- Property Type -->
