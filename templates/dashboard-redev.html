@@ -469,12 +469,12 @@
             // Handle Photos
             const photos = document.getElementById('photos').files;
             for (let i = 0; i < photos.length; i++) {
-                formData.append('photos', photos[i]);
+                formData.append('property_photos', photos[i]);
             }
 
 
             try {
-                const response = await fetch('https://propertybharat.com/save-property2', {
+                const response = await fetch('https://propertybharat.com/save-property3', {
                     method: 'POST',
                     body: formData
                 });
