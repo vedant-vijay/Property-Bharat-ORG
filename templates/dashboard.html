@@ -537,7 +537,7 @@
             formData.append('username', document.getElementById('username').value);
             formData.append('city', document.getElementById('city').value);
             formData.append('locality', document.getElementById('locality').value);
-            formData.append('propertyname', document.getElementById('propertyname').value);
+            formData.append('propertyName', document.getElementById('propertyname').value);
             formData.append('bhk_type', document.getElementById('bhk_type').value);
             formData.append('buildup_area', document.getElementById('buildup_area').value);
             formData.append('possession_status', document.getElementById('possession_status').value);
@@ -553,7 +553,7 @@
             }
 
             try {
-                const response = await fetch('https://propertybharat.com/save-property', {
+                const response = await fetch('https://propertybharat.com/save-property3', {
                     method: 'POST',
                     body: formData
                 });
