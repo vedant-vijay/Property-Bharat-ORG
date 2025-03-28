@@ -201,105 +201,129 @@ def save_property_to_user(email, property_data):
             "properties": [property_data]
         })
 
-
-@app.route('/save-property', methods=['POST'])
-def save_property():
-    email = request.form.get('email')
-    property_data = {
-        "username": request.form.get('username'),
-        "city": request.form.get('city'),
-        "locality": request.form.get('locality'),
-        "propertyname": request.form.get('propertyname'),
-        "possession_status": request.form.get('possession_status'),
-        "possession_date": request.form.get('possession_date'),
-        "property_type": request.form.get('property_type'),
-        "property_price": request.form.get('property_price'),
-        "security_deposit": request.form.get('security_deposit'),
-        "comments": request.form.get('comments'),
-        "photos": []
-    }
-
-    # Save property photos
-    property_photos = request.files.getlist('property_photos')
-    i = 1
-    for photo in property_photos:
-        if photo:
-            photo_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{email}{property_data['propertyname']}{i}.jpg")
-            photo.save(photo_path)
-            property_data["photos"].append(photo_path)
-            i += 1
-
-    try:
-        save_property_to_user(email, property_data)
-        return jsonify({'message': 'Property saved successfully'}), 201
-    except Exception as e:
-        return abort(500, description=str(e))
-
-
-@app.route('/save-property1', methods=['POST'])
-def save_property1():
-    email = request.form.get('email')
-    property_data = {
-        "user_type": request.form.get('user_type'),
-        "city": request.form.get('city'),
-        "name": request.form.get('name'),
-        "mobile": request.form.get('mobile'),
-        "firm_name": request.form.get('firm_name'),
-        "business_since": request.form.get('business_since')
-    }
-
-    try:
-        save_property_to_user(email, property_data)
-        return jsonify({'message': 'Property saved successfully'}), 201
-    except Exception as e:
-        return abort(500, description=str(e))
-
-
-@app.route('/save-property2', methods=['POST'])
-def save_property2():
-    email = request.form.get('email')
-    property_data = {
-        "propertyName": request.form.get('propertyName'),
-        "location": request.form.get('location'),
-        "propertyType": request.form.get('propertyType'),
-        "address": request.form.get('address'),
-        "builtUpArea": request.form.get('builtUpArea'),
-        "carpetArea": request.form.get('carpetArea'),
-        "ownership": request.form.get('ownership'),
-        "totalFloors": request.form.get('totalFloors'),
-        "totalFlats": request.form.get('totalFlats'),
-        "totalOwners": request.form.get('totalOwners'),
-        "comments": request.form.get('comments'),
-        "photos": []
-    }
-
-    # Save property photos
-    property_photos = request.files.getlist('property_photos')
-    i = 1
-    for photo in property_photos:
-        if photo:
-            photo_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{email}{property_data['propertyName']}{i}.jpg")
-            photo.save(photo_path)
-            property_data["photos"].append(photo_path)
-            i += 1
-
-    try:
-        save_property_to_user(email, property_data)
-        return jsonify({'message': 'Property saved successfully'}), 201
-    except Exception as e:
-        return abort(500, description=str(e))
-
-
 @app.route('/save-property3', methods=['POST'])
 def save_property3():
     email = request.form.get('email')
     property_data = request.form.to_dict()
 
+    # Save property photos only if they exist
+    if request.files.getlist('property_photos'):
+        property_photos = request.files.getlist('property_photos')
+        photos = []  # Temporary list to store photo paths
+
+        for i, photo in enumerate(property_photos, start=1):
+            if photo:
+                photo_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{email}{property_data['propertyName']}{i}.jpg")
+                photo.save(photo_path)
+                photos.append(photo_path)
+
+        if photos:  # Only add 'photos' key if there are uploaded photos
+            property_data['photos'] = photos
+
     try:
         save_property_to_user(email, property_data)
         return jsonify({'message': 'Property saved successfully'}), 201
     except Exception as e:
         return abort(500, description=str(e))
+        
+# @app.route('/save-property', methods=['POST'])
+# def save_property():
+#     email = request.form.get('email')
+#     property_data = {
+#         "username": request.form.get('username'),
+#         "city": request.form.get('city'),
+#         "locality": request.form.get('locality'),
+#         "propertyname": request.form.get('propertyname'),
+#         "possession_status": request.form.get('possession_status'),
+#         "possession_date": request.form.get('possession_date'),
+#         "property_type": request.form.get('property_type'),
+#         "property_price": request.form.get('property_price'),
+#         "security_deposit": request.form.get('security_deposit'),
+#         "comments": request.form.get('comments'),
+#         "photos": []
+#     }
+
+#     # Save property photos
+#     property_photos = request.files.getlist('property_photos')
+#     i = 1
+#     for photo in property_photos:
+#         if photo:
+#             photo_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{email}{property_data['propertyname']}{i}.jpg")
+#             photo.save(photo_path)
+#             property_data["photos"].append(photo_path)
+#             i += 1
+
+#     try:
+#         save_property_to_user(email, property_data)
+#         return jsonify({'message': 'Property saved successfully'}), 201
+#     except Exception as e:
+#         return abort(500, description=str(e))
+
+
+# @app.route('/save-property1', methods=['POST'])
+# def save_property1():
+#     email = request.form.get('email')
+#     property_data = {
+#         "user_type": request.form.get('user_type'),
+#         "city": request.form.get('city'),
+#         "name": request.form.get('name'),
+#         "mobile": request.form.get('mobile'),
+#         "firm_name": request.form.get('firm_name'),
+#         "business_since": request.form.get('business_since')
+#     }
+
+#     try:
+#         save_property_to_user(email, property_data)
+#         return jsonify({'message': 'Property saved successfully'}), 201
+#     except Exception as e:
+#         return abort(500, description=str(e))
+
+
+# @app.route('/save-property2', methods=['POST'])
+# def save_property2():
+#     email = request.form.get('email')
+#     property_data = {
+#         "propertyName": request.form.get('propertyName'),
+#         "location": request.form.get('location'),
+#         "propertyType": request.form.get('propertyType'),
+#         "address": request.form.get('address'),
+#         "builtUpArea": request.form.get('builtUpArea'),
+#         "carpetArea": request.form.get('carpetArea'),
+#         "ownership": request.form.get('ownership'),
+#         "totalFloors": request.form.get('totalFloors'),
+#         "totalFlats": request.form.get('totalFlats'),
+#         "totalOwners": request.form.get('totalOwners'),
+#         "comments": request.form.get('comments'),
+#         "photos": []
+#     }
+
+#     # Save property photos
+#     property_photos = request.files.getlist('property_photos')
+#     i = 1
+#     for photo in property_photos:
+#         if photo:
+#             photo_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{email}{property_data['propertyName']}{i}.jpg")
+#             photo.save(photo_path)
+#             property_data["photos"].append(photo_path)
+#             i += 1
+
+#     try:
+#         save_property_to_user(email, property_data)
+#         return jsonify({'message': 'Property saved successfully'}), 201
+#     except Exception as e:
+#         return abort(500, description=str(e))
+
+
+# @app.route('/save-property3', methods=['POST'])
+# def save_property3():
+#     email = request.form.get('email')
+#     property_data = request.form.to_dict()
+
+#     try:
+#         save_property_to_user(email, property_data)
+#         return jsonify({'message': 'Property saved successfully'}), 201
+#     except Exception as e:
+#         return abort(500, description=str(e))
 
 
 
