@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify,render_template, abort
+from flask import Flask, request, jsonify,render_template, abort, send_from_directory
 from flask_pymongo import PyMongo
 import random
 import smtplib
@@ -227,6 +227,9 @@ def save_property3():
     except Exception as e:
         return abort(500, description=str(e))
 
+@app.route('/uploads/<filename>')
+def serve_uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 # @app.route('/save-property', methods=['POST'])
 # def save_property():
