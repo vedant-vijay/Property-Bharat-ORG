@@ -228,10 +228,6 @@ def save_property3():
         return abort(500, description=str(e))
 
 
-@app.route('/uploads/<filename>')
-def serve_uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-        
 # @app.route('/save-property', methods=['POST'])
 # def save_property():
 #     email = request.form.get('email')
