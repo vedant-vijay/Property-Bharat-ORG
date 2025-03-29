@@ -65,6 +65,7 @@ def post_property():
     if request.method == 'GET':
         return render_template("post-property.html")
 
+
 ##########################################################################
 
 
@@ -225,6 +226,11 @@ def save_property3():
         return jsonify({'message': 'Property saved successfully'}), 201
     except Exception as e:
         return abort(500, description=str(e))
+
+
+@app.route('/uploads/<filename>')
+def serve_uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
         
 # @app.route('/save-property', methods=['POST'])
 # def save_property():
